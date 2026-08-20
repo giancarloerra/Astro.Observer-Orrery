@@ -1,0 +1,169 @@
+{
+  "comets": {
+    "1p-halley": {
+      "designation": "1P/Halley",
+      "display_name": "Halley",
+      "elements": {
+        "e": ".9679359956953211",
+        "a": "17.92863504856923",
+        "q": ".5748638313743413",
+        "i": "162.1905300439129",
+        "om": "59.09894720612437",
+        "w": "112.2414314637764",
+        "ma": "274.3823371366792",
+        "tp": "2446469.973616146677",
+        "per": "27728.04608790421",
+        "n": ".01298324443268444",
+        "ad": "35.28240626576412"
+      },
+      "element_units": {
+        "a": "au",
+        "q": "au",
+        "i": "deg",
+        "om": "deg",
+        "w": "deg",
+        "ma": "deg",
+        "tp": "TDB",
+        "per": "d",
+        "n": "deg/d",
+        "ad": "au"
+      },
+      "epoch": "2439875.5",
+      "epoch_scale": "TDB, Julian day",
+      "source": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=1P&full-prec=true",
+      "note": "JPL orbit solution 75; observation arc 1835-08-21 to 1994-01-11. Halley-type comet (SBDB orbit class)."
+    },
+    "2p-encke": {
+      "designation": "2P/Encke",
+      "display_name": "Encke",
+      "elements": {
+        "e": ".8477003352638754",
+        "a": "2.219688807038326",
+        "q": ".3380578611304654",
+        "i": "11.40704098723543",
+        "om": "334.1851099834068",
+        "w": "187.1421582207019",
+        "ma": "245.5009109690059",
+        "tp": "2460239.681188389180",
+        "per": "1207.915530076109",
+        "n": ".2980340851957727",
+        "ad": "4.101319752946187"
+      },
+      "element_units": {
+        "a": "au",
+        "q": "au",
+        "i": "deg",
+        "om": "deg",
+        "w": "deg",
+        "ma": "deg",
+        "tp": "TDB",
+        "per": "d",
+        "n": "deg/d",
+        "ad": "au"
+      },
+      "epoch": "2459855.5",
+      "epoch_scale": "TDB, Julian day",
+      "source": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=2P&full-prec=true",
+      "note": "JPL orbit solution K273/9; observation arc 2018-11-05 to 2026-08-11. Encke-type comet (SBDB orbit class); shortest orbital period in this file."
+    },
+    "67p-churyumov-gerasimenko": {
+      "designation": "67P/Churyumov-Gerasimenko",
+      "display_name": "Churyumov-Gerasimenko",
+      "elements": {
+        "e": ".6409081306555051",
+        "a": "3.462249489765068",
+        "q": "1.243265641416762",
+        "i": "7.040294906760007",
+        "om": "50.13557380441372",
+        "w": "12.79824973415729",
+        "ma": "8.859927418758764",
+        "tp": "2457247.588657863465",
+        "per": "2353.076067532089",
+        "n": ".1529912292115438",
+        "ad": "5.681233338113374"
+      },
+      "element_units": {
+        "a": "au",
+        "q": "au",
+        "i": "deg",
+        "om": "deg",
+        "w": "deg",
+        "ma": "deg",
+        "tp": "TDB",
+        "per": "d",
+        "n": "deg/d",
+        "ad": "au"
+      },
+      "epoch": "2457305.5",
+      "epoch_scale": "TDB, Julian day",
+      "source": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=67P&full-prec=true",
+      "note": "JPL orbit solution K213/6; observation arc 2008-06-01 to 2023-04-26. Jupiter-family comet (SBDB orbit class); target of the ESA Rosetta mission."
+    },
+    "c1995-o1-hale-bopp": {
+      "designation": "C/1995 O1 (Hale-Bopp)",
+      "display_name": "Hale-Bopp",
+      "elements": {
+        "e": ".9949810027633206",
+        "a": "177.4333839117583",
+        "q": ".890537663547794",
+        "i": "89.28759424740302",
+        "om": "282.7334213961641",
+        "w": "130.4146670659176",
+        "ma": "3.878386339423241",
+        "tp": "2450537.134907143944",
+        "per": "863279.5034870314",
+        "n": ".0004170144183266921",
+        "ad": "353.9762301599687"
+      },
+      "element_units": {
+        "a": "au",
+        "q": "au",
+        "i": "deg",
+        "om": "deg",
+        "w": "deg",
+        "ma": "deg",
+        "tp": "TDB",
+        "per": "d",
+        "n": "deg/d",
+        "ad": "au"
+      },
+      "epoch": "2459837.5",
+      "epoch_scale": "TDB, Julian day",
+      "source": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=C/1995%20O1&full-prec=true",
+      "note": "JPL orbit solution 226; observation arc 1993-04-27 to 2022-07-09. SBDB orbit class Comet (COM); largest eccentricity and longest orbital period in this file."
+    },
+    "109p-swift-tuttle": {
+      "designation": "109P/Swift-Tuttle",
+      "display_name": "Swift-Tuttle",
+      "elements": {
+        "e": "0.963225755046038",
+        "a": "26.0920694978266",
+        "q": "0.959516155068868",
+        "i": "113.453816997171",
+        "om": "139.3811920815948",
+        "w": "152.9821676305871",
+        "ma": "7.631696167124212",
+        "tp": "2448968.499784556297",
+        "per": "48681.19346262312",
+        "n": ".007395052881692476",
+        "ad": "51.22462284058444"
+      },
+      "element_units": {
+        "a": "au",
+        "q": "au",
+        "i": "deg",
+        "om": "deg",
+        "w": "deg",
+        "ma": "deg",
+        "tp": "TDB",
+        "per": "d",
+        "n": "deg/d",
+        "ad": "au"
+      },
+      "epoch": "2450000.5",
+      "epoch_scale": "TDB, Julian day",
+      "source": "https://ssd-api.jpl.nasa.gov/sbdb.api?sstr=109P&full-prec=true",
+      "note": "JPL orbit solution 32; observation arc 1737-07-08 to 1995-03-29. Halley-type comet (SBDB orbit class); parent body of the Perseid meteor shower."
+    }
+  }
+}

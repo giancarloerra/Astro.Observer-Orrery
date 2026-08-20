@@ -1,0 +1,671 @@
+{
+  "_meta": {
+    "description": "IAU WGCCRE rotational elements (north pole direction alpha0/delta0 and prime meridian W) for the Sun, planets and selected satellites, transcribed from the four source documents listed below. alpha0 and delta0 are ICRF equatorial coordinates at epoch J2000.0 (WGCCRE 2015 report, Table 1 header, p. 8 of 46).",
+    "standard_epoch": "JD 2451545.0, i.e. 2000 January 1 12 h TDB (WGCCRE 2015 report, Table 1 header, p. 8 of 46)",
+    "time_variables": {
+      "T": "Interval in Julian centuries (36,525 days) from the standard epoch (WGCCRE 2015 report, Table 1 header, p. 8 of 46)",
+      "d": "Interval in days from the standard epoch (WGCCRE 2015 report, Table 1 header, p. 8 of 46)"
+    },
+    "conventions": {
+      "digits": "Every numeric value is a string preserving the exact digits printed by its source, including trailing zeros. Parse to float in the app.",
+      "units": "All constants and coefficients are degrees. wdot_deg_per_day is degrees per day of d. T_terms entries are {power, coeff}: coeff multiplies T to that power (T in Julian centuries).",
+      "trig_terms": "Entries are {coeff, fn, arg} and optionally arg_multiple: the term is coeff times fn(arg_multiple x arg). arg_multiple absent means 1. arg names refer to the top-level arguments object.",
+      "d_terms": "Entries are {power, coeff}: coeff multiplies d to that power (d in days from the standard epoch). Present only where the source prints a polynomial term in d beyond the linear wdot_deg_per_day term (the Moon's W in the WGCCRE2009 report). coeff_as_printed records the source's power-of-ten notation where the machine-parseable coeff differs from it.",
+      "nulls": "pole_ra, pole_dec and W set to null mean the source documents publish no closed-form rotational elements for that body; the entry's note says what the source says instead."
+    },
+    "sources": {
+      "WGCCRE2015": "Archinal, B.A., et al., Report of the IAU Working Group on Cartographic Coordinates and Rotational Elements: 2015, Celestial Mechanics and Dynamical Astronomy 130:22 (2018), DOI 10.1007/s10569-017-9805-5. Page numbers cited are the 'Page N of 46' numbers printed on the publisher reprint.",
+      "Correction2019": "Archinal, B.A., et al., Correction to: Report of the IAU Working Group on Cartographic Coordinates and Rotational Elements: 2015, Celestial Mechanics and Dynamical Astronomy 131:61 (2019), DOI 10.1007/s10569-019-9925-1.",
+      "PSIDA2018": "Archinal, B. and the IAU WGCCRE, Planetary Coordinates Recommendations from the IAU Working Group on Cartographic Coordinates and Rotational Elements, Planetary Science Informatics and Data Analytics Conference, St. Louis, 2018 April 26. A slide deck; page numbers cited are PDF page numbers.",
+      "WGCCRE2009": "Archinal, B.A., et al., Report of the IAU Working Group on Cartographic Coordinates and Rotational Elements: 2009, Celestial Mechanics and Dynamical Astronomy 109:101-135 (2011), DOI 10.1007/s10569-010-9320-4. Page numbers cited are the printed journal page numbers 101-135."
+    }
+  },
+  "arguments": {
+    "mercury_M1": { "printed_name": "M1", "expression_deg": "174.7910857 + 4.092335 d", "variable": "d", "source": "WGCCRE2015 Table 1 p.8" },
+    "mercury_M2": { "printed_name": "M2", "expression_deg": "349.5821714 + 8.184670 d", "variable": "d", "source": "WGCCRE2015 Table 1 p.8" },
+    "mercury_M3": { "printed_name": "M3", "expression_deg": "164.3732571 + 12.277005 d", "variable": "d", "source": "WGCCRE2015 Table 1 p.8" },
+    "mercury_M4": { "printed_name": "M4", "expression_deg": "339.1643429 + 16.369340 d", "variable": "d", "source": "WGCCRE2015 Table 1 p.8" },
+    "mercury_M5": { "printed_name": "M5", "expression_deg": "153.9554286 + 20.461675 d", "variable": "d", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_ra_arg1": { "printed_name": "(inline)", "expression_deg": "198.991226 + 19139.4819985 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_ra_arg2": { "printed_name": "(inline)", "expression_deg": "226.292679 + 38280.8511281 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_ra_arg3": { "printed_name": "(inline)", "expression_deg": "249.663391 + 57420.7251593 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_ra_arg4": { "printed_name": "(inline)", "expression_deg": "266.183510 + 76560.6367950 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_ra_arg5": { "printed_name": "(inline)", "expression_deg": "79.398797 + 0.5042615 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_dec_arg1": { "printed_name": "(inline)", "expression_deg": "122.433576 + 19139.9407476 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_dec_arg2": { "printed_name": "(inline)", "expression_deg": "43.058401 + 38280.8753272 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_dec_arg3": { "printed_name": "(inline)", "expression_deg": "57.663379 + 57420.7517205 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_dec_arg4": { "printed_name": "(inline)", "expression_deg": "79.476401 + 76560.6495004 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_dec_arg5": { "printed_name": "(inline)", "expression_deg": "166.325722 + 0.5042615 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_w_arg1": { "printed_name": "(inline)", "expression_deg": "129.071773 + 19140.0328244 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_w_arg2": { "printed_name": "(inline)", "expression_deg": "36.352167 + 38281.0473591 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_w_arg3": { "printed_name": "(inline)", "expression_deg": "56.668646 + 57420.9295360 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_w_arg4": { "printed_name": "(inline)", "expression_deg": "67.364003 + 76560.2552215 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_w_arg5": { "printed_name": "(inline)", "expression_deg": "104.792680 + 95700.4387578 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "mars_w_arg6": { "printed_name": "(inline)", "expression_deg": "95.391654 + 0.5042615 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "Ja": { "printed_name": "Ja", "expression_deg": "99.360714 + 4850.4046 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "Jb": { "printed_name": "Jb", "expression_deg": "175.895369 + 1191.9605 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "Jc": { "printed_name": "Jc", "expression_deg": "300.323162 + 262.5475 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "Jd": { "printed_name": "Jd", "expression_deg": "114.012305 + 6070.2476 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "Je": { "printed_name": "Je", "expression_deg": "49.511251 + 64.3000 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.8" },
+    "N": { "printed_name": "N", "expression_deg": "357.85 + 52.316 T", "variable": "T", "source": "WGCCRE2015 Table 1 p.9 (repeated Table 2 p.14)" },
+    "mars_M1": { "printed_name": "M1", "expression_deg": "190.72646643 + 15917.10818695 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10 (also Correction2019 p.4)" },
+    "mars_M2": { "printed_name": "M2", "expression_deg": "21.46892470 + 31834.27934054 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10 (also Correction2019 p.4)" },
+    "mars_M3": { "printed_name": "M3", "expression_deg": "332.86082793 + 19139.89694742 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10 (also Correction2019 p.4)" },
+    "mars_M4": { "printed_name": "M4", "expression_deg": "394.93256437 + 38280.79631835 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10 (also Correction2019 p.4)" },
+    "mars_M5": { "printed_name": "M5", "expression_deg": "189.63271560 + 41215158.18420050 T + 12.71192322 T^2", "variable": "T", "source": "WGCCRE2015 Table 2 p.10 (also Correction2019 p.4)" },
+    "mars_M6": { "printed_name": "M6", "expression_deg": "121.46893664 + 660.22803474 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10" },
+    "mars_M7": { "printed_name": "M7", "expression_deg": "231.05028581 + 660.99123540 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10" },
+    "mars_M8": { "printed_name": "M8", "expression_deg": "251.37314025 + 1320.50145245 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10" },
+    "mars_M9": { "printed_name": "M9", "expression_deg": "217.98635955 + 38279.96125550 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10" },
+    "mars_M10": { "printed_name": "M10", "expression_deg": "196.19729402 + 19139.83628608 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.10" },
+    "J3": { "printed_name": "J3", "expression_deg": "283.90 + 4850.7 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.11" },
+    "J4": { "printed_name": "J4", "expression_deg": "355.80 + 1191.3 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.11" },
+    "J5": { "printed_name": "J5", "expression_deg": "119.90 + 262.1 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.11" },
+    "J6": { "printed_name": "J6", "expression_deg": "229.80 + 64.3 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.11" },
+    "J7": { "printed_name": "J7", "expression_deg": "352.25 + 2382.6 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.11" },
+    "J8": { "printed_name": "J8", "expression_deg": "113.35 + 6070.0 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.11" },
+    "N7": { "printed_name": "N7", "expression_deg": "177.85 + 52.316 T", "variable": "T", "source": "WGCCRE2015 Table 2 p.14" },
+    "MS1": { "printed_name": "MS1", "expression_deg": "0 + 0.21134279 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS2": { "printed_name": "MS2", "expression_deg": "90 + 0.21134279 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS3": { "printed_name": "MS3", "expression_deg": "0 + 19139.86461912 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS4": { "printed_name": "MS4", "expression_deg": "90 + 19139.81084919 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS5": { "printed_name": "MS5", "expression_deg": "190.02859433 + 19139.85801553 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS6": { "printed_name": "MS6", "expression_deg": "354.26708690 + 19139.85801553 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS7": { "printed_name": "MS7", "expression_deg": "0 + 19140.99045156 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS8": { "printed_name": "MS8", "expression_deg": "90 + 19141.16081386 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS9": { "printed_name": "MS9", "expression_deg": "0 + 38279.76346293 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS10": { "printed_name": "MS10", "expression_deg": "90 + 38279.64898292 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS11": { "printed_name": "MS11", "expression_deg": "0 + 38280.78360991 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS12": { "printed_name": "MS12", "expression_deg": "41.18790047 + 38280.88273809 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS13": { "printed_name": "MS13", "expression_deg": "90 + 38280.96773580 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS14": { "printed_name": "MS14", "expression_deg": "0 + 57413.23685793 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS15": { "printed_name": "MS15", "expression_deg": "90 + 57420.61182408 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS16": { "printed_name": "MS16", "expression_deg": "0 + 57420.61254870 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS17": { "printed_name": "MS17", "expression_deg": "90 + 57420.76966903 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS18": { "printed_name": "MS18", "expression_deg": "0 + 76560.22756307 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS19": { "printed_name": "MS19", "expression_deg": "90 + 76560.60395345 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS20": { "printed_name": "MS20", "expression_deg": "0 + 95700.82351052 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "MS21": { "printed_name": "MS21", "expression_deg": "90 + 95700.45229604 T", "variable": "T", "source": "PSIDA2018 backup slide, PDF p.17" },
+    "E1": { "printed_name": "E1", "expression_deg": "125.045 - 0.0529921 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E2": { "printed_name": "E2", "expression_deg": "250.089 - 0.1059842 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E3": { "printed_name": "E3", "expression_deg": "260.008 + 13.0120009 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E4": { "printed_name": "E4", "expression_deg": "176.625 + 13.3407154 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E5": { "printed_name": "E5", "expression_deg": "357.529 + 0.9856003 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E6": { "printed_name": "E6", "expression_deg": "311.589 + 26.4057084 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E7": { "printed_name": "E7", "expression_deg": "134.963 + 13.0649930 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E8": { "printed_name": "E8", "expression_deg": "276.617 + 0.3287146 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E9": { "printed_name": "E9", "expression_deg": "34.226 + 1.7484877 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E10": { "printed_name": "E10", "expression_deg": "15.134 - 0.1589763 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E11": { "printed_name": "E11", "expression_deg": "119.743 + 0.0036096 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E12": { "printed_name": "E12", "expression_deg": "239.961 + 0.1643573 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "E13": { "printed_name": "E13", "expression_deg": "25.053 + 12.9590088 d", "variable": "d", "source": "WGCCRE2009 Table 2 p.108" },
+    "_e_series_note": "The E1..E13 arguments belong to the WGCCRE2009 Moon series (Table 2 p.108). No argument of any of these names exists in the WGCCRE2015, Correction2019 or PSIDA2018 transcriptions above, so the printed names are kept without a prefix.",
+    "_ms_series_note": "The MS series carries the slide's footnote (e): it is assumed in these expressions that the values of 0 and 90 degrees are exact (PSIDA2018 PDF p.17). The 2015 report prints two unrelated series both named M1..M5: Mercury's (d-based, Table 1 p.8) and the Mars satellites' (T-based, Table 2 p.10). They are stored here under the distinct prefixes mercury_ and mars_.",
+    "_j2000_obliquity_deg": {
+      "value": "23.43928",
+      "purpose": "Mean obliquity of the ecliptic at J2000.0, used by js/rotation.js to rotate the ICRF equatorial pole and prime meridian directions above into the app's J2000 ecliptic frame. A frame-conversion constant, not a WGCCRE rotational element.",
+      "source": "IAU J2000 mean obliquity constant. None of the four source documents listed in _meta.sources states an obliquity value; the WGCCRE2009 report's only occurrence of the word 'obliquity' is in the title of its Margot 2009 reference."
+    }
+  },
+  "bodies": {
+    "sun": {
+      "pole_ra": { "a0": "286.13", "T_terms": [], "trig_terms": [] },
+      "pole_dec": { "d0": "63.87", "T_terms": [], "trig_terms": [] },
+      "W": { "w0": "84.176", "wdot_deg_per_day": "14.1844000", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.8",
+      "notes": "Footnote (a), p.9: the equation W for the Sun is now corrected for light travel time and removing the aberration correction; see the Appendix in Seidelmann et al. (2007). The report states (p.9) that the solar expressions are for comparative purposes only."
+    },
+    "mercury": {
+      "pole_ra": { "a0": "281.0103", "T_terms": [ { "power": 1, "coeff": "-0.0328" } ], "trig_terms": [] },
+      "pole_dec": { "d0": "61.4155", "T_terms": [ { "power": 1, "coeff": "-0.0049" } ], "trig_terms": [] },
+      "W": {
+        "w0": "329.5988",
+        "w0_uncertainty_as_printed": "0.0037",
+        "wdot_deg_per_day": "6.1385108",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "0.01067257", "fn": "sin", "arg": "mercury_M1" },
+          { "coeff": "-0.00112309", "fn": "sin", "arg": "mercury_M2" },
+          { "coeff": "-0.00011040", "fn": "sin", "arg": "mercury_M3" },
+          { "coeff": "-0.00002539", "fn": "sin", "arg": "mercury_M4" },
+          { "coeff": "-0.00000571", "fn": "sin", "arg": "mercury_M5" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.8",
+      "notes": "W0 is printed as '329.5988 +/- 0.0037'. Footnote (b), p.9: the 20 degree meridian of Mercury is defined by the crater Hun Kal."
+    },
+    "venus": {
+      "pole_ra": { "a0": "272.76", "T_terms": [], "trig_terms": [] },
+      "pole_dec": { "d0": "67.16", "T_terms": [], "trig_terms": [] },
+      "W": { "w0": "160.20", "wdot_deg_per_day": "-1.4813688", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.8",
+      "notes": "Retrograde (W decreases with time). Footnote (c), p.9: the 0 degree meridian of Venus is defined by the central peak in the crater Ariadne."
+    },
+    "earth": {
+      "pole_ra": { "a0": "0.00", "T_terms": [ { "power": 1, "coeff": "-0.641" } ], "trig_terms": [] },
+      "pole_dec": { "d0": "90.00", "T_terms": [ { "power": 1, "coeff": "-0.557" } ], "trig_terms": [] },
+      "W": { "w0": "190.147", "wdot_deg_per_day": "360.9856235", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2009 Table 1 p.107",
+      "use": "WGCCRE2009",
+      "notes": "The 2015 report publishes no closed-form replacement for this body, so the 2009 expressions apply. The 2015 report removed the approximate Earth expressions that earlier reports carried: their accuracy was poor and the expressions failed near the fundamental epoch J2000.0 (WGCCRE2015 Table 1 footnote 2, p.9), and it refers users to the International Earth Rotation and Reference Systems Service (IERS, https://www.iers.org) for appropriate models of the Earth's rotation. The 2009 report states (p.106) that expressions for the Sun and Earth are given to a similar precision as those of the other bodies of the Solar System and are for comparative purposes only."
+    },
+    "mars": {
+      "pole_ra": {
+        "a0": "317.269202",
+        "T_terms": [ { "power": 1, "coeff": "-0.10927547" } ],
+        "trig_terms": [
+          { "coeff": "0.000068", "fn": "sin", "arg": "mars_ra_arg1" },
+          { "coeff": "0.000238", "fn": "sin", "arg": "mars_ra_arg2" },
+          { "coeff": "0.000052", "fn": "sin", "arg": "mars_ra_arg3" },
+          { "coeff": "0.000009", "fn": "sin", "arg": "mars_ra_arg4" },
+          { "coeff": "0.419057", "fn": "sin", "arg": "mars_ra_arg5" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "54.432516",
+        "T_terms": [ { "power": 1, "coeff": "-0.05827105" } ],
+        "trig_terms": [
+          { "coeff": "0.000051", "fn": "cos", "arg": "mars_dec_arg1" },
+          { "coeff": "0.000141", "fn": "cos", "arg": "mars_dec_arg2" },
+          { "coeff": "0.000031", "fn": "cos", "arg": "mars_dec_arg3" },
+          { "coeff": "0.000005", "fn": "cos", "arg": "mars_dec_arg4" },
+          { "coeff": "1.591274", "fn": "cos", "arg": "mars_dec_arg5" }
+        ]
+      },
+      "W": {
+        "w0": "176.049863",
+        "wdot_deg_per_day": "350.891982443297",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "0.000145", "fn": "sin", "arg": "mars_w_arg1" },
+          { "coeff": "0.000157", "fn": "sin", "arg": "mars_w_arg2" },
+          { "coeff": "0.000040", "fn": "sin", "arg": "mars_w_arg3" },
+          { "coeff": "0.000001", "fn": "sin", "arg": "mars_w_arg4" },
+          { "coeff": "0.000001", "fn": "sin", "arg": "mars_w_arg5" },
+          { "coeff": "0.584542", "fn": "sin", "arg": "mars_w_arg6" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.8",
+      "notes": "Footnote (d), p.9: the longitude of the Viking 1 lander on Mars is defined to be 47.95137 degrees west (Kuchynka et al. 2014), maintaining the 0 degree meridian through the crater Airy-0.",
+      "use": "This WGCCRE2015 Table 1 model. The post_2015_update below was only proposed for a later report at the time of the 2018 presentation and is not a WGCCRE recommendation in any of the three source documents.",
+      "post_2015_update": {
+        "description": "New Mars orientation model based on Konopliv et al. 2016 and NAIF PCK file series expansion, shown on a backup slide. The deck's Outlook slide (PDF p.12) lists 'Mars: Recommend Konopliv et al. 2016 rotation model' under future activities, so this was proposed, not recommended, as of 2018 April 26.",
+        "source": "PSIDA2018 backup slide, PDF p.17",
+        "pole_ra": {
+          "a0": "315.34551871",
+          "T_terms": [ { "power": 1, "coeff": "-0.108649712784" } ],
+          "trig_terms": [
+            { "coeff": "0.", "fn": "sin", "arg": "MS1" },
+            { "coeff": "2.33559631", "fn": "sin", "arg": "MS2" },
+            { "coeff": "0.00004628", "fn": "sin", "arg": "MS3" },
+            { "coeff": "-0.00001031", "fn": "sin", "arg": "MS4" },
+            { "coeff": "0.00013117", "fn": "sin", "arg": "MS5" },
+            { "coeff": "0.", "fn": "sin", "arg": "MS6" },
+            { "coeff": "0.00001882", "fn": "sin", "arg": "MS7", "as_printed": "+ 0.00001882 + sin MS7 (stray plus sign on the slide)" },
+            { "coeff": "0.00001116", "fn": "sin", "arg": "MS8" },
+            { "coeff": "-0.00001014", "fn": "sin", "arg": "MS9" },
+            { "coeff": "-0.00000041", "fn": "sin", "arg": "MS10" },
+            { "coeff": "-0.00008977", "fn": "sin", "arg": "MS11" },
+            { "coeff": "-0.00008600", "fn": "sin", "arg": "MS12" },
+            { "coeff": "-0.00011513", "fn": "sin", "arg": "MS13" },
+            { "coeff": "-0.00000051", "fn": "sin", "arg": "MS14" },
+            { "coeff": "-0.00000136", "fn": "sin", "arg": "MS15" },
+            { "coeff": "-0.00001764", "fn": "sin", "arg": "MS16" },
+            { "coeff": "-0.00004755", "fn": "sin", "arg": "MS17" },
+            { "coeff": "-0.00000059", "fn": "sin", "arg": "MS18" },
+            { "coeff": "-0.00000873", "fn": "sin", "arg": "MS19" },
+            { "coeff": "0.00000035", "fn": "sin", "arg": "MS20", "as_printed": "+ 0.00000035 MS20 (the word sin is missing on the slide)" },
+            { "coeff": "-0.00000134", "fn": "sin", "arg": "MS21" }
+          ]
+        },
+        "pole_dec": {
+          "d0": "61.69239825",
+          "T_terms": [ { "power": 1, "coeff": "-0.061587333591" } ],
+          "trig_terms": [
+            { "coeff": "-8.80604547", "fn": "cos", "arg": "MS1" },
+            { "coeff": "0.", "fn": "cos", "arg": "MS2" },
+            { "coeff": "-0.00080268", "fn": "cos", "arg": "MS3" },
+            { "coeff": "0.00012392", "fn": "cos", "arg": "MS4" },
+            { "coeff": "0.", "fn": "cos", "arg": "MS5" },
+            { "coeff": "0.00079170", "fn": "cos", "arg": "MS6" },
+            { "coeff": "-0.00001272", "fn": "cos", "arg": "MS7" },
+            { "coeff": "-0.00000141", "fn": "cos", "arg": "MS8" },
+            { "coeff": "0.00000251", "fn": "cos", "arg": "MS9" },
+            { "coeff": "0.00000082", "fn": "cos", "arg": "MS10" },
+            { "coeff": "-0.00005458", "fn": "cos", "arg": "MS11" },
+            { "coeff": "0.00020651", "fn": "cos", "arg": "MS12" },
+            { "coeff": "0.00004026", "fn": "cos", "arg": "MS13" },
+            { "coeff": "-0.00000048", "fn": "cos", "arg": "MS14" },
+            { "coeff": "0.00000772", "fn": "cos", "arg": "MS15" },
+            { "coeff": "0.00001712", "fn": "cos", "arg": "MS16" },
+            { "coeff": "0.00001857", "fn": "cos", "arg": "MS17" },
+            { "coeff": "0.00000097", "fn": "cos", "arg": "MS18" },
+            { "coeff": "0.00000523", "fn": "cos", "arg": "MS19" },
+            { "coeff": "0.", "fn": "cos", "arg": "MS20" },
+            { "coeff": "0.00000083", "fn": "cos", "arg": "MS21" }
+          ]
+        },
+        "W": {
+          "w0": "173.30879242",
+          "wdot_deg_per_day": "350.891982519523",
+          "T_terms": [],
+          "trig_terms": [
+            { "coeff": "-0.75667792", "fn": "sin", "arg": "MS1" },
+            { "coeff": "3.32310358", "fn": "sin", "arg": "MS2" },
+            { "coeff": "-0.00230232", "fn": "sin", "arg": "MS3" },
+            { "coeff": "-0.00025587", "fn": "sin", "arg": "MS4" },
+            { "coeff": "-0.00220746", "fn": "sin", "arg": "MS5" },
+            { "coeff": "0.00006338", "fn": "sin", "arg": "MS6" },
+            { "coeff": "-0.00001442", "fn": "sin", "arg": "MS7" },
+            { "coeff": "-0.00000909", "fn": "sin", "arg": "MS8" },
+            { "coeff": "-0.00000076", "fn": "sin", "arg": "MS9" },
+            { "coeff": "-0.00002912", "fn": "sin", "arg": "MS10" },
+            { "coeff": "0.00019723", "fn": "sin", "arg": "MS11" },
+            { "coeff": "-0.00009194", "fn": "sin", "arg": "MS12" },
+            { "coeff": "0.00018709", "fn": "sin", "arg": "MS13" },
+            { "coeff": "0.00000142", "fn": "sin", "arg": "MS14" },
+            { "coeff": "-0.00003743", "fn": "sin", "arg": "MS15" },
+            { "coeff": "0.00002073", "fn": "sin", "arg": "MS16" },
+            { "coeff": "0.00007035", "fn": "sin", "arg": "MS17" },
+            { "coeff": "0.00000270", "fn": "sin", "arg": "MS18" },
+            { "coeff": "0.00000419", "fn": "sin", "arg": "MS19" },
+            { "coeff": "-0.00000028", "fn": "sin", "arg": "MS20" },
+            { "coeff": "0.00000107", "fn": "sin", "arg": "MS21" }
+          ]
+        },
+        "notes": "Slide footnote (d): the longitude of the Viking 1 lander is defined to be 47.95137 degrees west (Kuchynka et al. 2014), maintaining the 0 degree meridian through the crater Airy-0. Slide footnote (e): it is assumed in these expressions that the values of 0 and 90 degrees are exact. Coefficients printed on the slide as '0.' are transcribed as '0.'. Two printing anomalies on the slide are recorded in as_printed fields above."
+      }
+    },
+    "jupiter": {
+      "pole_ra": {
+        "a0": "268.056595",
+        "T_terms": [ { "power": 1, "coeff": "-0.006499" } ],
+        "trig_terms": [
+          { "coeff": "0.000117", "fn": "sin", "arg": "Ja" },
+          { "coeff": "0.000938", "fn": "sin", "arg": "Jb" },
+          { "coeff": "0.001432", "fn": "sin", "arg": "Jc" },
+          { "coeff": "0.000030", "fn": "sin", "arg": "Jd" },
+          { "coeff": "0.002150", "fn": "sin", "arg": "Je" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "64.495303",
+        "T_terms": [ { "power": 1, "coeff": "0.002413" } ],
+        "trig_terms": [
+          { "coeff": "0.000050", "fn": "cos", "arg": "Ja" },
+          { "coeff": "0.000404", "fn": "cos", "arg": "Jb" },
+          { "coeff": "0.000617", "fn": "cos", "arg": "Jc" },
+          { "coeff": "-0.000013", "fn": "cos", "arg": "Jd" },
+          { "coeff": "0.000926", "fn": "cos", "arg": "Je" }
+        ]
+      },
+      "W": { "w0": "284.95", "wdot_deg_per_day": "870.5360000", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.8",
+      "notes": "Footnote (e), p.9: W refers to the rotation of the magnetic field (System III). On Jupiter, System I (WI = 67.1 + 877.900 d) refers to the mean atmospheric equatorial rotation; System II (WII = 43.3 + 870.270 d) refers to the mean atmospheric rotation north of the south component of the north equatorial belt, and south of the north component of the south equatorial belt."
+    },
+    "saturn": {
+      "pole_ra": { "a0": "40.589", "T_terms": [ { "power": 1, "coeff": "-0.036" } ], "trig_terms": [] },
+      "pole_dec": { "d0": "83.537", "T_terms": [ { "power": 1, "coeff": "-0.004" } ], "trig_terms": [] },
+      "W": { "w0": "38.90", "wdot_deg_per_day": "810.7939024", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.9",
+      "notes": "Footnote (e), p.9: W refers to the rotation of the magnetic field (System III)."
+    },
+    "uranus": {
+      "pole_ra": { "a0": "257.311", "T_terms": [], "trig_terms": [] },
+      "pole_dec": { "d0": "-15.175", "T_terms": [], "trig_terms": [] },
+      "W": { "w0": "203.81", "wdot_deg_per_day": "-501.1600928", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.9",
+      "notes": "Retrograde (W decreases with time). Footnote (e), p.9: W refers to the rotation of the magnetic field (System III)."
+    },
+    "neptune": {
+      "pole_ra": { "a0": "299.36", "T_terms": [], "trig_terms": [ { "coeff": "0.70", "fn": "sin", "arg": "N" } ] },
+      "pole_dec": { "d0": "43.46", "T_terms": [], "trig_terms": [ { "coeff": "-0.51", "fn": "cos", "arg": "N" } ] },
+      "W": { "w0": "249.978", "wdot_deg_per_day": "541.1397757", "T_terms": [], "trig_terms": [ { "coeff": "-0.48", "fn": "sin", "arg": "N" } ] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 1 p.9",
+      "notes": "Footnote (f), p.9: the equations for Neptune refer to the rotation of optically observed features in the Neptunian atmosphere (System II), while still using the previous expressions for pole position and precession."
+    },
+    "moon": {
+      "pole_ra": {
+        "a0": "269.9949",
+        "T_terms": [ { "power": 1, "coeff": "0.0031" } ],
+        "trig_terms": [
+          { "coeff": "-3.8787", "fn": "sin", "arg": "E1" },
+          { "coeff": "-0.1204", "fn": "sin", "arg": "E2" },
+          { "coeff": "0.0700", "fn": "sin", "arg": "E3" },
+          { "coeff": "-0.0172", "fn": "sin", "arg": "E4" },
+          { "coeff": "0.0072", "fn": "sin", "arg": "E6" },
+          { "coeff": "-0.0052", "fn": "sin", "arg": "E10" },
+          { "coeff": "0.0043", "fn": "sin", "arg": "E13" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "66.5392",
+        "T_terms": [ { "power": 1, "coeff": "0.0130" } ],
+        "trig_terms": [
+          { "coeff": "1.5419", "fn": "cos", "arg": "E1" },
+          { "coeff": "0.0239", "fn": "cos", "arg": "E2" },
+          { "coeff": "-0.0278", "fn": "cos", "arg": "E3" },
+          { "coeff": "0.0068", "fn": "cos", "arg": "E4" },
+          { "coeff": "-0.0029", "fn": "cos", "arg": "E6" },
+          { "coeff": "0.0009", "fn": "cos", "arg": "E7" },
+          { "coeff": "0.0008", "fn": "cos", "arg": "E10" },
+          { "coeff": "-0.0009", "fn": "cos", "arg": "E13" }
+        ]
+      },
+      "W": {
+        "w0": "38.3213",
+        "wdot_deg_per_day": "13.17635815",
+        "d_terms": [ { "power": 2, "coeff": "-1.4e-12", "coeff_as_printed": "-1.4 x 10^-12" } ],
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "3.5610", "fn": "sin", "arg": "E1" },
+          { "coeff": "0.1208", "fn": "sin", "arg": "E2" },
+          { "coeff": "-0.0642", "fn": "sin", "arg": "E3" },
+          { "coeff": "0.0158", "fn": "sin", "arg": "E4" },
+          { "coeff": "0.0252", "fn": "sin", "arg": "E5" },
+          { "coeff": "-0.0066", "fn": "sin", "arg": "E6" },
+          { "coeff": "-0.0047", "fn": "sin", "arg": "E7" },
+          { "coeff": "-0.0046", "fn": "sin", "arg": "E8" },
+          { "coeff": "0.0028", "fn": "sin", "arg": "E9" },
+          { "coeff": "0.0052", "fn": "sin", "arg": "E10" },
+          { "coeff": "0.0040", "fn": "sin", "arg": "E11" },
+          { "coeff": "0.0019", "fn": "sin", "arg": "E12" },
+          { "coeff": "-0.0044", "fn": "sin", "arg": "E13" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2009 Table 2 p.108 (footnote (a) p.113)",
+      "use": "WGCCRE2009",
+      "notes": "The 2015 report publishes no closed-form replacement for this body, so the 2009 expressions apply. The complete 2009 series is transcribed: 7 trigonometric terms in alpha0, 8 in delta0, 13 in W, arguments E1..E13 defined in the arguments object above. WGCCRE2009 Table 2 footnote (a), p.113: these formulae are only precise to approximately 150 m; for higher precision an ephemeris should be used as described in Sect. 3 of the text. The 2015 report removed these closed formulae for the same accuracy reason (WGCCRE2015 Sect. 3, p.14); it recommends the mean Earth/polar axis (ME) system with libration angles phi, theta, psi from the DE421 lunar ephemeris rotated from the principal axis system into ME with M = Rx(-0.30 arcsec) Ry(-78.56 arcsec) Rz(-67.92 arcsec) P (WGCCRE2015 Eq. 1, p.17), then alpha0 = phi - 90 degrees, delta0 = 90 degrees - theta, W = psi (p.17), and publishes no closed-form series."
+    },
+    "phobos": {
+      "pole_ra": {
+        "a0": "317.67071657",
+        "T_terms": [ { "power": 1, "coeff": "-0.10844326" } ],
+        "trig_terms": [
+          { "coeff": "-1.78428399", "fn": "sin", "arg": "mars_M1" },
+          { "coeff": "0.02212824", "fn": "sin", "arg": "mars_M2" },
+          { "coeff": "-0.01028251", "fn": "sin", "arg": "mars_M3" },
+          { "coeff": "-0.00475595", "fn": "sin", "arg": "mars_M4" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "52.88627266",
+        "T_terms": [ { "power": 1, "coeff": "-0.06134706" } ],
+        "trig_terms": [
+          { "coeff": "-1.07516537", "fn": "cos", "arg": "mars_M1" },
+          { "coeff": "0.00668626", "fn": "cos", "arg": "mars_M2" },
+          { "coeff": "-0.00648740", "fn": "cos", "arg": "mars_M3" },
+          { "coeff": "0.00281576", "fn": "cos", "arg": "mars_M4" }
+        ]
+      },
+      "W": {
+        "w0": "35.18774440",
+        "wdot_deg_per_day": "1128.84475928",
+        "T_terms": [ { "power": 2, "coeff": "12.72192797" } ],
+        "trig_terms": [
+          { "coeff": "1.42421769", "fn": "sin", "arg": "mars_M1" },
+          { "coeff": "-0.02273783", "fn": "sin", "arg": "mars_M2" },
+          { "coeff": "0.00410711", "fn": "sin", "arg": "mars_M3" },
+          { "coeff": "0.00631964", "fn": "sin", "arg": "mars_M4" },
+          { "coeff": "-1.143", "fn": "sin", "arg": "mars_M5" }
+        ]
+      },
+      "W_as_printed_in_2015_report": {
+        "w0": "34.9964842535",
+        "wdot_deg_per_day": "1128.84475928",
+        "T_terms": [ { "power": 2, "coeff": "12.72192797" } ],
+        "trig_terms": [
+          { "coeff": "1.42421769", "fn": "sin", "arg": "mars_M1" },
+          { "coeff": "-0.02273783", "fn": "sin", "arg": "mars_M2" },
+          { "coeff": "0.00410711", "fn": "sin", "arg": "mars_M3" },
+          { "coeff": "0.00631964", "fn": "sin", "arg": "mars_M4" },
+          { "coeff": "1.143", "fn": "sin", "arg": "mars_M5" }
+        ],
+        "source": "WGCCRE2015 Table 2 p.10",
+        "status": "Superseded by Correction2019: W0 corrected to 35.18774440 and the sign of the 1.143 sin(M5) term corrected from positive to negative (Correction2019 pp.3-4)."
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "pole_ra and pole_dec: WGCCRE2015 Table 2 p.10, reproduced unchanged in Correction2019 p.4. W: Correction2019 pp.3-4 (corrected Table 2 excerpt).",
+      "use": "The corrected W above. The 2015 printing is kept in W_as_printed_in_2015_report for provenance only.",
+      "notes": "The prime meridian of Phobos is defined dynamically, by the orientation of Phobos with respect to the Mars centre of mass at the time the satellite is passing its pericentre (Correction2019 pp.2-3)."
+    },
+    "deimos": {
+      "pole_ra": {
+        "a0": "316.65705808",
+        "T_terms": [ { "power": 1, "coeff": "-0.10518014" } ],
+        "trig_terms": [
+          { "coeff": "3.09217726", "fn": "sin", "arg": "mars_M6" },
+          { "coeff": "0.22980637", "fn": "sin", "arg": "mars_M7" },
+          { "coeff": "0.06418655", "fn": "sin", "arg": "mars_M8" },
+          { "coeff": "0.02533537", "fn": "sin", "arg": "mars_M9" },
+          { "coeff": "0.00778695", "fn": "sin", "arg": "mars_M10" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "53.50992033",
+        "T_terms": [ { "power": 1, "coeff": "-0.05979094" } ],
+        "trig_terms": [
+          { "coeff": "1.83936004", "fn": "cos", "arg": "mars_M6" },
+          { "coeff": "0.14325320", "fn": "cos", "arg": "mars_M7" },
+          { "coeff": "0.01911409", "fn": "cos", "arg": "mars_M8" },
+          { "coeff": "-0.01482590", "fn": "cos", "arg": "mars_M9" },
+          { "coeff": "0.00192430", "fn": "cos", "arg": "mars_M10" }
+        ]
+      },
+      "W": {
+        "w0": "79.39932954",
+        "wdot_deg_per_day": "285.16188899",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "-2.73954829", "fn": "sin", "arg": "mars_M6" },
+          { "coeff": "-0.39968606", "fn": "sin", "arg": "mars_M7" },
+          { "coeff": "-0.06563259", "fn": "sin", "arg": "mars_M8" },
+          { "coeff": "-0.02912940", "fn": "sin", "arg": "mars_M9" },
+          { "coeff": "0.01699160", "fn": "sin", "arg": "mars_M10" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.10",
+      "notes": "The 2015 report prints the declination symbol for Deimos as bare 'delta'; Correction2019 (p.4) notes it should read 'delta0'. Typographical only, no numeric change."
+    },
+    "io": {
+      "pole_ra": {
+        "a0": "268.05",
+        "T_terms": [ { "power": 1, "coeff": "-0.009" } ],
+        "trig_terms": [
+          { "coeff": "0.094", "fn": "sin", "arg": "J3" },
+          { "coeff": "0.024", "fn": "sin", "arg": "J4" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "64.50",
+        "T_terms": [ { "power": 1, "coeff": "0.003" } ],
+        "trig_terms": [
+          { "coeff": "0.040", "fn": "cos", "arg": "J3" },
+          { "coeff": "0.011", "fn": "cos", "arg": "J4" }
+        ]
+      },
+      "W": {
+        "w0": "200.39",
+        "wdot_deg_per_day": "203.4889538",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "-0.085", "fn": "sin", "arg": "J3" },
+          { "coeff": "-0.022", "fn": "sin", "arg": "J4" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.10",
+      "notes": "Footnote (a), p.14: the 0 degree meridian of Io is defined by the mean sub-Jovian direction since it is assumed surface features will not last long enough to serve as a long-term reference."
+    },
+    "europa": {
+      "pole_ra": {
+        "a0": "268.08",
+        "T_terms": [ { "power": 1, "coeff": "-0.009" } ],
+        "trig_terms": [
+          { "coeff": "1.086", "fn": "sin", "arg": "J4" },
+          { "coeff": "0.060", "fn": "sin", "arg": "J5" },
+          { "coeff": "0.015", "fn": "sin", "arg": "J6" },
+          { "coeff": "0.009", "fn": "sin", "arg": "J7" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "64.51",
+        "T_terms": [ { "power": 1, "coeff": "0.003" } ],
+        "trig_terms": [
+          { "coeff": "0.468", "fn": "cos", "arg": "J4" },
+          { "coeff": "0.026", "fn": "cos", "arg": "J5" },
+          { "coeff": "0.007", "fn": "cos", "arg": "J6" },
+          { "coeff": "0.002", "fn": "cos", "arg": "J7" }
+        ]
+      },
+      "W": {
+        "w0": "36.022",
+        "wdot_deg_per_day": "101.3747235",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "-0.980", "fn": "sin", "arg": "J4" },
+          { "coeff": "-0.054", "fn": "sin", "arg": "J5" },
+          { "coeff": "-0.014", "fn": "sin", "arg": "J6" },
+          { "coeff": "-0.008", "fn": "sin", "arg": "J7" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.11",
+      "notes": "Footnote (b), p.14: the 182 degree meridian of Europa is defined by the crater Cilix."
+    },
+    "ganymede": {
+      "pole_ra": {
+        "a0": "268.20",
+        "T_terms": [ { "power": 1, "coeff": "-0.009" } ],
+        "trig_terms": [
+          { "coeff": "-0.037", "fn": "sin", "arg": "J4" },
+          { "coeff": "0.431", "fn": "sin", "arg": "J5" },
+          { "coeff": "0.091", "fn": "sin", "arg": "J6" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "64.57",
+        "T_terms": [ { "power": 1, "coeff": "0.003" } ],
+        "trig_terms": [
+          { "coeff": "-0.016", "fn": "cos", "arg": "J4" },
+          { "coeff": "0.186", "fn": "cos", "arg": "J5" },
+          { "coeff": "0.039", "fn": "cos", "arg": "J6" }
+        ]
+      },
+      "W": {
+        "w0": "44.064",
+        "wdot_deg_per_day": "50.3176081",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "0.033", "fn": "sin", "arg": "J4" },
+          { "coeff": "-0.389", "fn": "sin", "arg": "J5" },
+          { "coeff": "-0.082", "fn": "sin", "arg": "J6" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.11",
+      "notes": "Footnote (c), p.14: the 128 degree meridian of Ganymede is defined by the crater Anat."
+    },
+    "callisto": {
+      "pole_ra": {
+        "a0": "268.72",
+        "T_terms": [ { "power": 1, "coeff": "-0.009" } ],
+        "trig_terms": [
+          { "coeff": "-0.068", "fn": "sin", "arg": "J5" },
+          { "coeff": "0.590", "fn": "sin", "arg": "J6" },
+          { "coeff": "0.010", "fn": "sin", "arg": "J8" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "64.83",
+        "T_terms": [ { "power": 1, "coeff": "0.003" } ],
+        "trig_terms": [
+          { "coeff": "-0.029", "fn": "cos", "arg": "J5" },
+          { "coeff": "0.254", "fn": "cos", "arg": "J6" },
+          { "coeff": "-0.004", "fn": "cos", "arg": "J8" }
+        ]
+      },
+      "W": {
+        "w0": "259.51",
+        "wdot_deg_per_day": "21.5710715",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "0.061", "fn": "sin", "arg": "J5" },
+          { "coeff": "-0.533", "fn": "sin", "arg": "J6" },
+          { "coeff": "-0.009", "fn": "sin", "arg": "J8" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.11",
+      "notes": "Footnote (d), p.14: the 326 degree meridian of Callisto is defined by the crater Saga."
+    },
+    "titan": {
+      "pole_ra": { "a0": "39.4827", "T_terms": [], "trig_terms": [] },
+      "pole_dec": { "d0": "83.4279", "T_terms": [], "trig_terms": [] },
+      "W": { "w0": "186.5855", "wdot_deg_per_day": "22.5769768", "T_terms": [], "trig_terms": [] },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.12",
+      "notes": "No T or trigonometric terms are printed for Titan."
+    },
+    "triton": {
+      "pole_ra": {
+        "a0": "299.36",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "-32.35", "fn": "sin", "arg": "N7" },
+          { "coeff": "-6.28", "fn": "sin", "arg": "N7", "arg_multiple": "2" },
+          { "coeff": "-2.08", "fn": "sin", "arg": "N7", "arg_multiple": "3" },
+          { "coeff": "-0.74", "fn": "sin", "arg": "N7", "arg_multiple": "4" },
+          { "coeff": "-0.28", "fn": "sin", "arg": "N7", "arg_multiple": "5" },
+          { "coeff": "-0.11", "fn": "sin", "arg": "N7", "arg_multiple": "6" },
+          { "coeff": "-0.07", "fn": "sin", "arg": "N7", "arg_multiple": "7" },
+          { "coeff": "-0.02", "fn": "sin", "arg": "N7", "arg_multiple": "8" },
+          { "coeff": "-0.01", "fn": "sin", "arg": "N7", "arg_multiple": "9" }
+        ]
+      },
+      "pole_dec": {
+        "d0": "41.17",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "22.55", "fn": "cos", "arg": "N7" },
+          { "coeff": "2.10", "fn": "cos", "arg": "N7", "arg_multiple": "2" },
+          { "coeff": "0.55", "fn": "cos", "arg": "N7", "arg_multiple": "3" },
+          { "coeff": "0.16", "fn": "cos", "arg": "N7", "arg_multiple": "4" },
+          { "coeff": "0.05", "fn": "cos", "arg": "N7", "arg_multiple": "5" },
+          { "coeff": "0.02", "fn": "cos", "arg": "N7", "arg_multiple": "6" },
+          { "coeff": "0.01", "fn": "cos", "arg": "N7", "arg_multiple": "7" }
+        ]
+      },
+      "W": {
+        "w0": "296.53",
+        "wdot_deg_per_day": "-61.2572637",
+        "T_terms": [],
+        "trig_terms": [
+          { "coeff": "22.25", "fn": "sin", "arg": "N7" },
+          { "coeff": "6.73", "fn": "sin", "arg": "N7", "arg_multiple": "2" },
+          { "coeff": "2.05", "fn": "sin", "arg": "N7", "arg_multiple": "3" },
+          { "coeff": "0.74", "fn": "sin", "arg": "N7", "arg_multiple": "4" },
+          { "coeff": "0.28", "fn": "sin", "arg": "N7", "arg_multiple": "5" },
+          { "coeff": "0.11", "fn": "sin", "arg": "N7", "arg_multiple": "6" },
+          { "coeff": "0.05", "fn": "sin", "arg": "N7", "arg_multiple": "7" },
+          { "coeff": "0.02", "fn": "sin", "arg": "N7", "arg_multiple": "8" },
+          { "coeff": "0.01", "fn": "sin", "arg": "N7", "arg_multiple": "9" }
+        ]
+      },
+      "frame": "ICRF equatorial J2000",
+      "source": "WGCCRE2015 Table 2 p.13 (N7 defined p.14)",
+      "notes": "Retrograde (W decreases with time)."
+    }
+  }
+}

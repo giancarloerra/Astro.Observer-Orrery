@@ -1,0 +1,164 @@
+{
+  "dataset": "JPL Approximate Positions of the Planets, Table 1 Keplerian elements and rates",
+  "source": {
+    "url": "https://ssd.jpl.nasa.gov/planets/approx_pos.html",
+    "note": "Table 1 is embedded directly in the page HTML inside a pre block. Values below are copied verbatim from that table."
+  },
+  "epoch": "J2000.0 (T = (JD_TDB - 2451545.0) / 36525 centuries past J2000.0)",
+  "valid_range": "1800 AD to 2050 AD",
+  "reference_frame": "mean ecliptic and equinox of J2000",
+  "units": {
+    "a_au": "au",
+    "a_au_rate_per_century": "au per Julian century",
+    "e": "dimensionless (the page column header prints 'rad, rad/Cy' for this column; eccentricity is dimensionless)",
+    "e_rate_per_century": "per Julian century",
+    "I_deg": "degrees",
+    "I_deg_rate_per_century": "degrees per Julian century",
+    "L_deg": "degrees (mean longitude)",
+    "L_deg_rate_per_century": "degrees per Julian century",
+    "long_peri_deg": "degrees (longitude of perihelion)",
+    "long_peri_deg_rate_per_century": "degrees per Julian century",
+    "long_node_deg": "degrees (longitude of ascending node)",
+    "long_node_deg_rate_per_century": "degrees per Julian century"
+  },
+  "usage_note": "element(T) = element + rate * T, with T in Julian centuries past J2000.0. Values are stored as strings to preserve the exact digits printed by the source; parse to float in the app.",
+  "planets": [
+    {
+      "name": "Mercury",
+      "elements": {
+        "a_au": "0.38709927",
+        "a_au_rate_per_century": "0.00000037",
+        "e": "0.20563593",
+        "e_rate_per_century": "0.00001906",
+        "I_deg": "7.00497902",
+        "I_deg_rate_per_century": "-0.00594749",
+        "L_deg": "252.25032350",
+        "L_deg_rate_per_century": "149472.67411175",
+        "long_peri_deg": "77.45779628",
+        "long_peri_deg_rate_per_century": "0.16047689",
+        "long_node_deg": "48.33076593",
+        "long_node_deg_rate_per_century": "-0.12534081"
+      }
+    },
+    {
+      "name": "Venus",
+      "elements": {
+        "a_au": "0.72333566",
+        "a_au_rate_per_century": "0.00000390",
+        "e": "0.00677672",
+        "e_rate_per_century": "-0.00004107",
+        "I_deg": "3.39467605",
+        "I_deg_rate_per_century": "-0.00078890",
+        "L_deg": "181.97909950",
+        "L_deg_rate_per_century": "58517.81538729",
+        "long_peri_deg": "131.60246718",
+        "long_peri_deg_rate_per_century": "0.00268329",
+        "long_node_deg": "76.67984255",
+        "long_node_deg_rate_per_century": "-0.27769418"
+      }
+    },
+    {
+      "name": "Earth",
+      "source_row_note": "The source table row is labelled 'EM Bary' (Earth/Moon Barycenter); JPL publishes barycentre elements in place of Earth-only elements in this table.",
+      "elements": {
+        "a_au": "1.00000261",
+        "a_au_rate_per_century": "0.00000562",
+        "e": "0.01671123",
+        "e_rate_per_century": "-0.00004392",
+        "I_deg": "-0.00001531",
+        "I_deg_rate_per_century": "-0.01294668",
+        "L_deg": "100.46457166",
+        "L_deg_rate_per_century": "35999.37244981",
+        "long_peri_deg": "102.93768193",
+        "long_peri_deg_rate_per_century": "0.32327364",
+        "long_node_deg": "0.0",
+        "long_node_deg_rate_per_century": "0.0"
+      }
+    },
+    {
+      "name": "Mars",
+      "elements": {
+        "a_au": "1.52371034",
+        "a_au_rate_per_century": "0.00001847",
+        "e": "0.09339410",
+        "e_rate_per_century": "0.00007882",
+        "I_deg": "1.84969142",
+        "I_deg_rate_per_century": "-0.00813131",
+        "L_deg": "-4.55343205",
+        "L_deg_rate_per_century": "19140.30268499",
+        "long_peri_deg": "-23.94362959",
+        "long_peri_deg_rate_per_century": "0.44441088",
+        "long_node_deg": "49.55953891",
+        "long_node_deg_rate_per_century": "-0.29257343"
+      }
+    },
+    {
+      "name": "Jupiter",
+      "elements": {
+        "a_au": "5.20288700",
+        "a_au_rate_per_century": "-0.00011607",
+        "e": "0.04838624",
+        "e_rate_per_century": "-0.00013253",
+        "I_deg": "1.30439695",
+        "I_deg_rate_per_century": "-0.00183714",
+        "L_deg": "34.39644051",
+        "L_deg_rate_per_century": "3034.74612775",
+        "long_peri_deg": "14.72847983",
+        "long_peri_deg_rate_per_century": "0.21252668",
+        "long_node_deg": "100.47390909",
+        "long_node_deg_rate_per_century": "0.20469106"
+      }
+    },
+    {
+      "name": "Saturn",
+      "elements": {
+        "a_au": "9.53667594",
+        "a_au_rate_per_century": "-0.00125060",
+        "e": "0.05386179",
+        "e_rate_per_century": "-0.00050991",
+        "I_deg": "2.48599187",
+        "I_deg_rate_per_century": "0.00193609",
+        "L_deg": "49.95424423",
+        "L_deg_rate_per_century": "1222.49362201",
+        "long_peri_deg": "92.59887831",
+        "long_peri_deg_rate_per_century": "-0.41897216",
+        "long_node_deg": "113.66242448",
+        "long_node_deg_rate_per_century": "-0.28867794"
+      }
+    },
+    {
+      "name": "Uranus",
+      "elements": {
+        "a_au": "19.18916464",
+        "a_au_rate_per_century": "-0.00196176",
+        "e": "0.04725744",
+        "e_rate_per_century": "-0.00004397",
+        "I_deg": "0.77263783",
+        "I_deg_rate_per_century": "-0.00242939",
+        "L_deg": "313.23810451",
+        "L_deg_rate_per_century": "428.48202785",
+        "long_peri_deg": "170.95427630",
+        "long_peri_deg_rate_per_century": "0.40805281",
+        "long_node_deg": "74.01692503",
+        "long_node_deg_rate_per_century": "0.04240589"
+      }
+    },
+    {
+      "name": "Neptune",
+      "elements": {
+        "a_au": "30.06992276",
+        "a_au_rate_per_century": "0.00026291",
+        "e": "0.00859048",
+        "e_rate_per_century": "0.00005105",
+        "I_deg": "1.77004347",
+        "I_deg_rate_per_century": "0.00035372",
+        "L_deg": "-55.12002969",
+        "L_deg_rate_per_century": "218.45945325",
+        "long_peri_deg": "44.96476227",
+        "long_peri_deg_rate_per_century": "-0.32241464",
+        "long_node_deg": "131.78422574",
+        "long_node_deg_rate_per_century": "-0.00508664"
+      }
+    }
+  ]
+}

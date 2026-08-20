@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later
+     Copyright (C) 2026 Giancarlo Erra -->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solar System 3D Model</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./css/solar.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="./js/main.js"></script>
+</head>
+<body>
+
+  <canvas id="scene" aria-label="Solar system orrery"></canvas>
+  <div id="labels" aria-hidden="true"></div>
+
+  <header id="top-bar">
+    <div id="top-left">
+      <div id="brand">
+        <!-- site-wordmark -->
+        <h1 class="sublabel">Solar System Interactive 3D Model</h1>
+      </div>
+      <nav id="chrome-links" aria-label="Site links" hidden>
+        <!-- site-links -->
+      </nav>
+    </div>
+    <div id="top-right">
+      <div id="scale-badge" hidden>true scale</div>
+      <button id="bodies-toggle" type="button" aria-expanded="false" aria-controls="bodies-panel">Bodies</button>
+    </div>
+  </header>
+  <!-- site-script -->
+
+  <!-- The model is drawn with WebGL and built entirely in script, so with
+       scripting off the page paints an empty ground. This states what the
+       page is and where the gallery it belongs to is. -->
+  <noscript>
+    <section id="noscript-note" aria-label="What this page is">
+      <p>This page is an interactive 3D model of the solar system, drawn in the
+      browser with WebGL from published NASA/JPL orbital data. It is built
+      entirely in script, so it needs JavaScript enabled and a browser that
+      supports WebGL. It belongs to the
+      <a href="/">Astrophotography Gallery</a>.</p>
+    </section>
+  </noscript>
+
+  <aside id="bodies-panel" aria-label="Bodies">
+    <nav id="bodies-list" aria-label="Fly to a body"></nav>
+  </aside>
+
+  <section id="info-panel" aria-label="About and help" hidden>
+    <button id="info-close" type="button" aria-label="Close">&#215;</button>
+    <h2>About - Help</h2>
+    <!-- Usage bullets, filled by ui.js from the one copy of that list. -->
+    <ul id="usage-list" class="usage-list"></ul>
+    <p>A live model of the solar system. Planet and moon positions come from
+    published NASA/JPL orbital data and follow the real sky. The date and
+    speed controls move the whole system in time; Easy mode compresses
+    distances so everything stays visible, Accurate mode is true scale.
+    Spacecraft follow their real recorded trajectories from JPL Horizons and
+    appear only during each mission's dates.</p>
+    <p>Where a site supplies them, the small pictures in the sky are
+    photographs, each placed in the real direction of its subject; the
+    distance at which a picture floats is symbolic. Clicking a picture opens
+    the photograph. Pins on Earth mark where the aurora and landscape images
+    were taken. Comets are off by default and include well-known comets and
+    the ones photographed in the gallery.</p>
+    <p>The Milky Way entry, above Solar System in the body list, swaps to a
+    galactic view: a top-down sketch of the galaxy's measured spiral arms
+    with Sagittarius A* at the centre, the Sun at its measured distance from
+    it, and an arrow showing the direction of the Sun's orbit. Distances
+    there are illustrative and the view does not follow the clock; Solar System or
+    Escape returns to the planets.</p>
+    <nav class="about-links" aria-label="Source and site links">
+      <!-- site-about-links -->
+      <a href="https://github.com/giancarloerra/Astro.Observer-Orrery">Source on GitHub</a>
+    </nav>
+    <p id="colophon">Open source under
+    <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL-3.0-or-later</a>.
+    Copyright Giancarlo Erra.</p>
+    <section id="tech-notes">
+      <h3>Technical notes</h3>
+      <h4>Data sources</h4>
+      <ul>
+        <li>https://ssd.jpl.nasa.gov/planets/approx_pos.html</li>
+        <li>https://ssd.jpl.nasa.gov/planets/phys_par.html</li>
+        <li>https://ssd.jpl.nasa.gov/sats/phys_par/</li>
+        <li>https://ssd.jpl.nasa.gov/api/horizons.api</li>
+        <li>https://ssd.jpl.nasa.gov/sats/elem/</li>
+        <li>https://ssd-api.jpl.nasa.gov/sbdb.api (comet elements)</li>
+        <li>https://science.nasa.gov/ (body and mission fact pages for the descriptions)</li>
+        <li>https://mars.nasa.gov/ (MMGIS rover waypoint feeds)</li>
+        <li>https://science.nasa.gov/saturn/moons/titan/facts/</li>
+        <li>IAU WGCCRE report 2015 (DOI 10.1007/s10569-017-9805-5) with its 2019 correction, and the 2009 report for Earth and the Moon</li>
+        <li>https://astrogeology.usgs.gov/ (surface map mosaics)</li>
+        <li>https://svs.gsfc.nasa.gov/ (Sun and Moon maps, SVS 3851 and 4720)</li>
+        <li>https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry (Earth map)</li>
+        <li>https://science.nasa.gov/photojournal/cassinis-best-maps-of-jupiter-cylindrical-map/ (Jupiter map, PIA07782)</li>
+        <li>https://atmos.nmsu.edu/data_and_services/atmospheres_data/Cassini/sat_global_map_11062023.html (Saturn map)</li>
+      </ul>
+      <p>planetary elements valid 1800 to 2050 (JPL)</p>
+      <p>Planet positions use the JPL approximate-positions algorithm with Table 1
+      Keplerian elements, valid 1800 AD to 2050 AD.</p>
+      <p>Moon orbits are approximate: circular-inclined propagation of JPL mean
+      satellite elements at epoch 2000-01-01.5 TDB. Orbit eccentricity, node and
+      periapsis precession are not modelled, and the stated Laplace reference
+      planes are approximated by the ecliptic frame.</p>
+      <p>Comet positions propagate JPL SBDB osculating elements fixed at their
+      stated epoch as unperturbed two-body orbits; accuracy degrades away from
+      that epoch.</p>
+      <p>Spacecraft positions are linearly interpolated between sampled JPL
+      Horizons state vectors and are shown only inside each mission's
+      ephemeris span; the trajectory lines join the stored samples. Mars rover
+      pins sit at each rover's published waypoint coordinates.</p>
+      <p>Body orientation (rotation axis and prime meridian) follows the IAU
+      WGCCRE 2015 rotational elements with the 2019 correction. Earth and the
+      Moon use the WGCCRE 2009 closed-form expressions: the 2015 report removed
+      them without a closed-form replacement, referring to the IERS for Earth
+      and to DE421 libration angles for the Moon.</p>
+      <p>Surface maps are public-domain USGS Astrogeology and NASA global
+      mosaics, aligned to each body's WGCCRE prime meridian; per-map provenance
+      and longitude conventions are in textures/SOURCES.md. Credits:
+      NASA/JPL/USGS; NASA/JPL/Space Science Institute;
+      NASA/JPL-Caltech/Space Science Institute;
+      NASA/JPL-Caltech/Space Science Institute/USGS;
+      NASA/Johns Hopkins University Applied Physics Laboratory/Carnegie
+      Institution of Washington/USGS; NASA/Goddard Space Flight Center
+      Scientific Visualization Studio; NASA Earth Observatory. Uranus, Neptune
+      and Deimos have no public-domain global map and keep a flat colour.</p>
+      <p>All values are copied from the sources above or derived from them by
+      documented unit conversions; none are invented. Colours are
+      presentational.</p>
+    </section>
+  </section>
+
+  <aside id="info-card" aria-label="Selected body information" hidden>
+    <button id="card-close" type="button" aria-label="Close">&#215;</button>
+    <h2 id="card-name"></h2>
+    <p id="card-desc"><span id="card-desc-text"></span>
+      <a id="card-source" rel="external">source</a></p>
+    <dl id="card-live"></dl>
+    <p id="card-note" hidden></p>
+  </aside>
+
+  <!-- First-arrival card: the same bullets as the About - Help panel, shown
+       once and dismissed by its close control or the Escape key. Built
+       hidden; ui.js shows it only when no dismissal is stored. -->
+  <aside id="usage-card" aria-label="How to use this model" hidden>
+    <button id="usage-close" type="button" aria-label="Close">&#215;</button>
+    <h2>How to use</h2>
+    <ul id="usage-card-list" class="usage-list"></ul>
+  </aside>
+
+  <nav id="photo-strip" aria-label="Gallery photographs of the followed body" hidden></nav>
+
+  <!-- Fine print for the galactic view, shown only while it is active
+       (ui.js positions it above the control bar, main.js drives it with
+       the view swap). -->
+  <aside id="galaxy-note" aria-label="Galactic view notes" hidden>
+    <p>Distances in this view are illustrative. The spiral arm centrelines
+    follow the log-periodic fits of Reid et al. 2019 (ApJ 885, 131, Table 2),
+    drawn only over their fitted azimuth ranges; that model assumes the Sun
+    8.15 kpc from the centre. The Sun is marked 8277 pc from the galactic
+    centre (GRAVITY collaboration 2022) and orbits it at about 230 km/s, once
+    in roughly 226 to 230 million years (NRAO; NASA StarChild). The orbit is
+    not drawn: the Sun's galactic orbit does not close.</p>
+  </aside>
+
+  <footer id="controls" aria-label="Time and view controls">
+    <div class="cluster">
+      <button id="play-toggle" type="button" aria-pressed="true">Pause</button>
+      <label class="field">
+        <span class="field-name">Speed</span>
+        <select id="speed">
+          <option value="1">real time</option>
+          <option value="60">1 min/s</option>
+          <option value="3600">1 hour/s</option>
+          <option value="86400" selected>1 day/s</option>
+          <option value="604800">1 week/s</option>
+          <option value="2592000">1 month/s</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="cluster">
+      <label class="field">
+        <span class="field-name">Date</span>
+        <input id="date-input" type="date" min="1800-01-01" max="2050-12-31">
+      </label>
+      <button id="now-button" type="button">Now</button>
+      <span id="date-display" aria-live="off"></span>
+      <span id="clamp-note" hidden>planetary elements valid 1800 to 2050 (JPL)</span>
+    </div>
+
+    <div class="cluster">
+      <div id="mode-toggle" role="group" aria-label="Scale mode">
+        <button id="mode-easy" type="button" aria-pressed="true">Easy</button>
+        <button id="mode-accurate" type="button" aria-pressed="false">Accurate</button>
+      </div>
+      <button id="axes-toggle" type="button" aria-pressed="true" title="Show rotation axes and prime meridians">Axes</button>
+      <button id="comets-toggle" type="button" aria-pressed="false" title="Show the comets">Comets</button>
+      <button id="probes-toggle" type="button" aria-pressed="false" title="Show spacecraft and rover sites">Probes</button>
+      <button id="info-toggle" type="button" aria-expanded="false" aria-controls="info-panel" title="How to use this model, and where its data comes from">ABOUT - HELP</button>
+    </div>
+
+    <a id="github-link" href="https://github.com/giancarloerra/Astro.Observer-Orrery">
+      <svg viewBox="0 0 16 16" width="14" height="14" role="img" aria-label="GitHub" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </footer>
+
+  <div id="fatal" role="alert" hidden></div>
+
+</body>
+</html>

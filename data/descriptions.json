@@ -1,0 +1,138 @@
+{
+  "_meta": {
+    "purpose": "One-sentence factual descriptions for every body the model renders, for display in the interface.",
+    "schema": "Each entry is {\"text\": one sentence, \"source\": the URL the sentence's facts were drawn from}.",
+    "key_conventions": {
+      "sun_planets_moons": "lower-cased body name: sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, moon, phobos, deimos, io, europa, ganymede, callisto, titan, triton",
+      "comets": "designation slug matching the skymap body keys: 1p-halley, 2p-encke, 46p-wirtanen, 67p-churyumov-gerasimenko, 109p-swift-tuttle, c1995-o1-hale-bopp, c2020-f3-neowise",
+      "craft": "hyphenated mission name: voyager-1, voyager-2, cassini, new-horizons, perseverance, curiosity"
+    },
+    "provenance": "Every numeric value and superlative in a text is printed on that entry's cited source page. British spelling is editorial; unit conversions in brackets are as printed by the source except km spellings."
+  },
+  "bodies": {
+    "sun": {
+      "text": "The Sun is a yellow dwarf star, a hot glowing ball of hydrogen and helium held together by its own gravity, about 93 million miles (150 million kilometres) from Earth.",
+      "source": "https://science.nasa.gov/sun/facts/"
+    },
+    "mercury": {
+      "text": "Mercury is the smallest planet in the Solar System and the nearest to the Sun, travelling around it every 88 days.",
+      "source": "https://science.nasa.gov/mercury/facts/"
+    },
+    "venus": {
+      "text": "Venus is the second planet from the Sun, spinning slowly in the opposite direction from most planets beneath a thick carbon dioxide atmosphere that keeps its surface hot enough to melt lead.",
+      "source": "https://science.nasa.gov/venus/facts/"
+    },
+    "earth": {
+      "text": "Earth is the third planet from the Sun, the only place known to be inhabited by living things and the only planet in the Solar System with liquid water on its surface.",
+      "source": "https://science.nasa.gov/earth/facts/"
+    },
+    "mars": {
+      "text": "Mars is the fourth planet from the Sun, about half the size of Earth, and looks red because iron minerals in its surface have oxidised, or rusted.",
+      "source": "https://science.nasa.gov/mars/facts/"
+    },
+    "jupiter": {
+      "text": "Jupiter is the largest planet in the Solar System, a giant made mostly of hydrogen and helium that is 11 times wider than Earth.",
+      "source": "https://science.nasa.gov/jupiter/facts/"
+    },
+    "saturn": {
+      "text": "Saturn is the sixth planet from the Sun, a massive ball made mostly of hydrogen and helium, circled by spectacular rings of billions of small chunks of ice and rock.",
+      "source": "https://science.nasa.gov/saturn/facts/"
+    },
+    "uranus": {
+      "text": "Uranus is the seventh planet from the Sun and the only planet whose equator is nearly at a right angle to its orbit, tilted 97.77 degrees so that it appears to spin sideways.",
+      "source": "https://science.nasa.gov/uranus/facts/"
+    },
+    "neptune": {
+      "text": "Neptune is the eighth and most distant planet in the Solar System, the first planet located through mathematical prediction rather than observation, with winds that can exceed 1,200 miles per hour (2,000 kilometres per hour).",
+      "source": "https://science.nasa.gov/neptune/facts/"
+    },
+    "moon": {
+      "text": "The Moon is Earth's only natural satellite, orbiting at an average distance of 238,855 miles (384,400 kilometres) and tidally locked so that only one side is ever seen from Earth.",
+      "source": "https://science.nasa.gov/moon/facts/"
+    },
+    "phobos": {
+      "text": "Phobos is the larger of Mars' two moons, orbiting the planet three times a day, and will either crash into Mars in about 50 million years or break up into a ring.",
+      "source": "https://science.nasa.gov/mars/moons/phobos/"
+    },
+    "deimos": {
+      "text": "Deimos is the smaller of Mars' two moons, a small, lumpy, heavily cratered object that orbits the planet every 30 hours.",
+      "source": "https://science.nasa.gov/mars/moons/deimos/"
+    },
+    "io": {
+      "text": "Io, a moon of Jupiter only slightly larger than Earth's Moon, is the most volcanically active world in the Solar System, with hundreds of volcanoes, some erupting lava fountains dozens of miles high.",
+      "source": "https://science.nasa.gov/jupiter/moons/io/"
+    },
+    "europa": {
+      "text": "Europa, the fourth largest of Jupiter's moons, hides a saltwater ocean beneath its icy shell that holds twice as much water as Earth's global ocean.",
+      "source": "https://science.nasa.gov/jupiter/moons/europa/"
+    },
+    "ganymede": {
+      "text": "Ganymede is the largest moon in the Solar System, bigger than the planet Mercury, and the only moon known to have its own magnetic field.",
+      "source": "https://science.nasa.gov/jupiter/moons/ganymede/"
+    },
+    "callisto": {
+      "text": "Callisto is Jupiter's second largest moon and the most heavily cratered object in the Solar System, its bright scars on a darker surface recording a long history of impacts.",
+      "source": "https://science.nasa.gov/jupiter/moons/callisto/"
+    },
+    "titan": {
+      "text": "Titan is Saturn's largest moon and the only moon in the Solar System known to have a substantial atmosphere, with rivers, lakes and seas of liquid hydrocarbons such as methane and ethane on its surface.",
+      "source": "https://science.nasa.gov/saturn/moons/titan/facts/"
+    },
+    "triton": {
+      "text": "Triton is the largest of Neptune's moons and the only large moon in the Solar System with a retrograde orbit, circling opposite to its planet's rotation, and is thought to be a Kuiper Belt object captured by Neptune's gravity.",
+      "source": "https://science.nasa.gov/neptune/moons/triton/"
+    },
+    "1p-halley": {
+      "text": "Comet 1P/Halley, the first comet astronomers understood to be a repeat visitor to Earth's skies, orbits the Sun about every 76 years and was last seen in 1986, returning in 2061.",
+      "source": "https://science.nasa.gov/solar-system/comets/1p-halley/"
+    },
+    "2p-encke": {
+      "text": "Comet 2P/Encke is a small comet with the shortest orbital period of any known comet in the Solar System, circling the Sun once every 3.30 years, and is the parent of the Taurid meteor shower.",
+      "source": "https://science.nasa.gov/solar-system/comets/2p-encke/"
+    },
+    "46p-wirtanen": {
+      "text": "Comet 46P/Wirtanen orbits the Sun once every 5.4 years, far more quickly than the famous comet Halley, and in 2018 passed just over 7 million miles (11 million kilometres) from Earth.",
+      "source": "https://science.nasa.gov/missions/hubble/hubble-takes-a-close-look-at-the-brightest-comet-of-the-year/"
+    },
+    "67p-churyumov-gerasimenko": {
+      "text": "Comet 67P/Churyumov-Gerasimenko made history as the first comet to be orbited and landed on by robotic spacecraft, when the Rosetta spacecraft carrying the Philae lander reached it in August 2014.",
+      "source": "https://science.nasa.gov/solar-system/comets/67p-churyumov-gerasimenko/"
+    },
+    "109p-swift-tuttle": {
+      "text": "Comet 109P/Swift-Tuttle, whose trail of debris produces the annual Perseid meteor shower, takes 133 years to orbit the Sun and last approached it in 1992.",
+      "source": "https://science.nasa.gov/solar-system/comets/109p-swift-tuttle/"
+    },
+    "c1995-o1-hale-bopp": {
+      "text": "Comet C/1995 O1 (Hale-Bopp), a large comet with a nucleus about 37 miles (60 kilometres) across, stayed visible to the naked eye for 18 months in 1996 and 1997 and takes about 2,534 years to orbit the Sun.",
+      "source": "https://science.nasa.gov/solar-system/comets/c-1995-o1-hale-bopp/"
+    },
+    "c2020-f3-neowise": {
+      "text": "Comet C/2020 F3 (NEOWISE), discovered by NASA's NEOWISE mission in March 2020, passed within 27 million miles (43 million kilometres) of the Sun in July 2020 and will not return for nearly 7,000 years.",
+      "source": "https://science.nasa.gov/missions/hubble/hubble-snaps-close-up-of-celebrity-comet-neowise/"
+    },
+    "voyager-1": {
+      "text": "Voyager 1, launched in 1977, flew past Jupiter and Saturn and entered interstellar space in August 2012, and is the farthest object created by humans.",
+      "source": "https://science.nasa.gov/mission/voyager-1/"
+    },
+    "voyager-2": {
+      "text": "Voyager 2, launched in 1977, is the only spacecraft to have studied all four of the Solar System's giant planets at close range, flying past Jupiter, Saturn, Uranus and Neptune before entering interstellar space in 2018.",
+      "source": "https://science.nasa.gov/mission/voyager-2/"
+    },
+    "cassini": {
+      "text": "Cassini studied Saturn and its system of rings and moons up close from 2004 until, after two decades in space, operators deliberately plunged the spacecraft into the planet to keep Saturn's moons pristine for future exploration.",
+      "source": "https://science.nasa.gov/mission/cassini/"
+    },
+    "new-horizons": {
+      "text": "New Horizons flew past Pluto on 14 July 2015 and went on to explore the Kuiper Belt object Arrokoth in 2019, the most distant object ever explored up close.",
+      "source": "https://science.nasa.gov/mission/new-horizons/"
+    },
+    "perseverance": {
+      "text": "The Perseverance rover landed in Jezero Crater on Mars on 18 February 2021 to search for signs of ancient microbial life, collecting samples of rock and regolith as it explores.",
+      "source": "https://science.nasa.gov/mission/mars-2020-perseverance/"
+    },
+    "curiosity": {
+      "text": "The Curiosity rover, about the size of a small SUV, landed in Gale Crater on Mars on 6 August 2012 to determine whether Mars was ever able to support microbial life.",
+      "source": "https://science.nasa.gov/mission/msl-curiosity/"
+    }
+  }
+}

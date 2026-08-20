@@ -1,0 +1,994 @@
+/* Solar System 3D Model
+   Space variant of the site theme: near-black ground (never pure #000),
+   aged-white ink, amber accent, flat, hairline rules, border radius capped
+   at 2px. Type follows the folio pairing: Instrument Serif roman for the
+   wordmark, sublabel, card names, the About heading and the list dividers;
+   Geist for the general interface text (buttons, labels, About body,
+   descriptions); Geist Mono only for tabular numeric readouts (the date
+   display and the live value numbers), a deliberate data register. */
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('../fonts/instrument-serif-latin-400-normal.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('../fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../fonts/geist-sans-latin-400-normal.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../fonts/geist-mono-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../fonts/geist-mono-600.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+:root {
+  --ground:     oklch(9% 0.004 260);
+  --panel:      oklch(12% 0.006 260 / 0.92);
+  --panel-2:    oklch(16% 0.007 260);
+  --rule:       oklch(30% 0.01 260);
+  --ink:        oklch(93% 0.005 60);
+  --muted:      oklch(70% 0.008 60);
+  --accent:     oklch(70% 0.13 45);
+  --accent-ink: oklch(15% 0.012 45);
+  --focus:      oklch(76% 0.15 45);
+
+  --font-display: 'Instrument Serif', serif;
+  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --hair: 1px;
+  --radius: 2px;
+  --dur: 160ms;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---- canvas and labels ---- */
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#labels {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.body-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -160%);
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.body-label.active {
+  color: var(--accent);
+}
+
+/* ---- top bar: brand and site links on the left, badge and bodies toggle
+   on the right. The same solid treatment as the bottom control bar, full
+   width, so the text never sits on the scene. ---- */
+
+#top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 18px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: var(--hair) solid var(--rule);
+  z-index: 3;
+}
+
+#top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* wordmark and the Solar System label share one row, each in its own face */
+#brand {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+/* Both carry the folio wordmark face, Instrument Serif roman with the folio
+   tracking, at the sizes this bar already uses. */
+.wordmark {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.wordmark:hover {
+  color: var(--accent);
+}
+
+/* The page heading. Every value the heading element would otherwise inherit
+   from the browser default (weight, margin) is stated here, so the label
+   paints exactly as it did before it became a heading. */
+.sublabel {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+#chrome-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 22px;
+}
+
+.link-sep {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#chrome-links a {
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#chrome-links a:hover {
+  color: var(--accent);
+}
+
+#top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+#scale-badge {
+  padding: 3px 8px;
+  border: var(--hair) solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 12px;
+}
+
+/* ---- shared control styling ---- */
+
+button,
+select,
+input[type='date'] {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  min-height: 30px;
+}
+
+button {
+  cursor: pointer;
+  transition: color var(--dur), border-color var(--dur), background var(--dur);
+}
+
+button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+button[aria-pressed='true'],
+button[aria-expanded='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+select { appearance: none; }
+
+input[type='date'] {
+  color-scheme: dark;
+}
+
+/* ---- bottom control bar ---- */
+
+#controls {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: var(--panel);
+  border-top: var(--hair) solid var(--rule);
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.field-name {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Tabular numeric readout: the mono data register. */
+#date-display {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  min-width: 15ch;
+}
+
+#mode-toggle {
+  display: flex;
+}
+
+#mode-toggle button {
+  border-radius: 0;
+}
+
+#mode-toggle button:first-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+#mode-toggle button:last-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  border-left: none;
+}
+
+#clamp-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* GitHub link at the right edge of the control bar, octocat mark inline. */
+
+#github-link {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#github-link:hover,
+#github-link:focus-visible {
+  color: var(--accent);
+}
+
+#github-link svg {
+  display: block;
+}
+
+/* ---- body list ---- */
+
+#bodies-toggle {
+  display: none;
+}
+
+/* The inline top offset comes from ui.js measuring the top bar, whose
+   height varies with wrapping; top: 0 here is only the pre-measurement
+   value. */
+#bodies-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 170px;
+  padding: 12px 0 16px;
+  overflow-y: auto;
+  background: var(--panel);
+  border-left: var(--hair) solid var(--rule);
+  z-index: 2;
+}
+
+#bodies-list {
+  display: flex;
+  flex-direction: column;
+}
+
+#bodies-list [hidden] {
+  display: none;
+}
+
+#bodies-list button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  text-align: left;
+  padding: 6px 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Brighter ink, not the accent: the accent means "this is the one being
+   followed", and hover must not impersonate it. */
+#bodies-list button:hover {
+  color: var(--ink);
+}
+
+/* The System entry is the whole-system reset, not a body: it stands apart
+   in the display face. */
+#bodies-list button.system {
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+
+#bodies-list button.moon {
+  padding-left: 30px;
+}
+
+#bodies-list button[aria-pressed='true'] {
+  background: none;
+  color: var(--accent);
+  border-left: 2px solid var(--accent);
+  padding-left: 12px;
+}
+
+#bodies-list button.moon[aria-pressed='true'] {
+  padding-left: 28px;
+}
+
+/* Comets from skymap.json: indented under a divider, like moons. The whole
+   section renders only while the Comets toggle is on (ui.js). */
+
+.list-divider {
+  padding: 10px 14px 2px;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#bodies-list button.comet {
+  padding-left: 30px;
+}
+
+#bodies-list button.comet[aria-pressed='true'] {
+  padding-left: 28px;
+}
+
+/* Spacecraft from probes.json: indented under a Probes divider like the
+   comets. The section renders only while the Probes toggle is on; a craft
+   whose recorded span excludes the simulated time is dimmed and inert. */
+
+#bodies-list button.probe {
+  padding-left: 30px;
+}
+
+#bodies-list button.probe[aria-pressed='true'] {
+  padding-left: 28px;
+}
+
+#bodies-list button.probe:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+#bodies-list button.probe:disabled:hover {
+  color: var(--muted);
+}
+
+/* ---- about panel ---- */
+
+#info-panel {
+  position: fixed;
+  left: 16px;
+  bottom: 110px;
+  max-width: min(460px, calc(100vw - 32px));
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  z-index: 4;
+}
+
+#info-panel h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#info-panel p {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+/* Every link in the panel reads in the accent colour; the underline appears
+   on hover and keyboard focus. */
+#info-panel a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+#info-panel a:hover,
+#info-panel a:focus-visible {
+  text-decoration: underline;
+}
+
+/* Close control, the same treatment as the info card's. */
+#info-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-height: 0;
+  padding: 2px 7px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+
+#info-close:hover {
+  color: var(--accent);
+}
+
+/* Usage bullets, one class for both places they appear: fine print, no list
+   marker glyph as with the other lists here, each item led by the hyphen the
+   top bar already sets between its links. */
+
+.usage-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.usage-list li {
+  position: relative;
+  padding: 1px 0 1px 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.usage-list li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+}
+
+/* In the panel the bullets sit above the prose, cut off from it by the same
+   hairline rule the technical notes use below. */
+#usage-list {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: var(--hair) solid var(--rule);
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0 0 10px;
+}
+
+.about-links a {
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#colophon {
+  color: var(--muted);
+}
+
+/* Technical detail as fine print: complete, but clearly subordinate to the
+   general-audience text above it. */
+
+#tech-notes {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: var(--hair) solid var(--rule);
+}
+
+/* Weight 400: Geist ships in the regular weight only, so a heavier value
+   would synthesise a faux bold. */
+#tech-notes h3,
+#tech-notes h4 {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#tech-notes h4 {
+  margin-top: 8px;
+}
+
+#tech-notes ul {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+#tech-notes li {
+  font-size: 10px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  padding: 1px 0;
+}
+
+#tech-notes p {
+  margin: 0 0 6px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ---- info card for the selected body ---- */
+
+/* Quiet panel below the top bar on the left, clear of the photo strip and
+   the control bar at the bottom. The inline top offset comes from ui.js
+   measuring the top bar; top: 0 here is only the pre-measurement value. */
+#info-card {
+  position: fixed;
+  left: 16px;
+  top: 0;
+  width: min(300px, calc(100vw - 202px)); /* clear of the body list */
+  max-height: 42vh;
+  overflow-y: auto;
+  padding: 12px 14px;
+  background: var(--panel);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  z-index: 2;
+}
+
+#info-card[hidden] {
+  display: none;
+}
+
+#card-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-height: 0;
+  padding: 2px 7px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+
+#card-close:hover {
+  color: var(--accent);
+}
+
+#info-card h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+#card-desc {
+  margin: 0 0 8px;
+  font-size: 11px;
+  color: var(--ink);
+}
+
+#card-source {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+#card-source:hover,
+#card-source:focus-visible {
+  color: var(--accent);
+}
+
+#card-live {
+  margin: 0 0 8px;
+}
+
+#card-live[hidden] {
+  display: none;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 1px 0;
+}
+
+.card-row dt {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Live value numbers: the mono data register. */
+.card-row dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+#card-note {
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+#card-note[hidden] {
+  display: none;
+}
+
+/* ---- first-arrival usage card ---- */
+
+/* Small card centred over the scene on a first visit, carrying the same
+   bullets as the About - Help panel. Solid ground so the bullets read over
+   whatever is behind them, and above the panels but under the fatal error. */
+#usage-card {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(340px, calc(100vw - 32px));
+  padding: 14px 16px;
+  background: var(--panel-2);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  /* Above every panel and the control bar, under the fatal error only, so
+     nothing it covers can be clicked through it by accident. */
+  z-index: 9;
+  /* Clear of the control bar at the foot of the screen, so the bar stays
+     reachable while the card is up. */
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+#usage-card[hidden] {
+  display: none;
+}
+
+/* A control's name inside the usage list, given the control-bar weight and
+   colour so the word and the button read as the same thing. */
+.ui-name {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-style: normal;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+#usage-card h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Close control, the same treatment as the info card's. */
+/* 24px minimum target: this is the only way to dismiss the card by touch,
+   where there is no Escape key. */
+#usage-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1;
+}
+
+#usage-close:hover {
+  color: var(--accent);
+}
+
+/* ---- photo strip (optional, driven by photos.json) ---- */
+
+#photo-strip {
+  position: fixed;
+  left: 16px;
+  bottom: 0; /* replaced with the measured control bar height in ui.js */
+  max-width: calc(100vw - 202px); /* clear of the body list */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 10px;
+  background: var(--panel);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  z-index: 1;
+}
+
+#photo-strip[hidden] {
+  display: none;
+}
+
+#photo-strip .strip-label {
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+#photo-strip a {
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex: none;
+}
+
+#photo-strip a:hover,
+#photo-strip a:focus-visible {
+  color: var(--accent);
+}
+
+#photo-strip img {
+  display: block;
+  height: 44px;
+  width: auto;
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* ---- galactic view (galaxy.js) ---- */
+
+/* Arm, marker and arrow labels: the mono data register as small-caps fine
+   print, muted; the Sun's label carries the accent like its marker. */
+.galaxy-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -160%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.galaxy-label.sun {
+  color: var(--accent);
+}
+
+/* The view's fine print, in the photo strip's place above the control bar
+   (the two are never up together; ui.js measures the offset). */
+#galaxy-note {
+  position: fixed;
+  left: 16px;
+  bottom: 0; /* replaced with the measured control bar height in ui.js */
+  max-width: min(440px, calc(100vw - 202px)); /* clear of the body list */
+  padding: 8px 10px;
+  background: var(--panel);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  z-index: 1;
+}
+
+#galaxy-note[hidden] {
+  display: none;
+}
+
+#galaxy-note p {
+  margin: 0;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+/* ---- sky photo marker hover labels (skymap.json) ---- */
+
+.sky-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -160%);
+  padding: 2px 7px;
+  background: var(--panel);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+/* ---- fatal error ---- */
+
+#fatal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: min(520px, calc(100vw - 32px));
+  padding: 18px 20px;
+  background: var(--panel-2);
+  border: var(--hair) solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 13px;
+  z-index: 10;
+}
+
+/* ---- no-script note ---- */
+
+/* Only ever painted with scripting off, where the canvas is an empty ground
+   and the two bars are the whole page. Sits above them, plain panel
+   treatment, not the accent border the fatal error carries. */
+#noscript-note {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 520px;
+  /* Both edges are pinned and the width is capped, so the auto inline margins
+     centre it. Centring by left: 50% instead would leave a fixed box only the
+     space to the right of the midpoint, half the viewport on a phone. */
+  margin-inline: auto;
+  padding: 18px 20px;
+  background: var(--panel-2);
+  border: var(--hair) solid var(--rule);
+  border-radius: var(--radius);
+  z-index: 4;
+}
+
+#noscript-note p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+#noscript-note a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+#noscript-note a:hover,
+#noscript-note a:focus-visible {
+  text-decoration: underline;
+}
+
+/* ---- mobile ---- */
+
+@media (max-width: 760px) {
+  #top-bar {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  #bodies-toggle {
+    display: block;
+  }
+
+  #bodies-panel {
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform var(--dur), visibility var(--dur);
+  }
+
+  #bodies-panel.open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  #controls {
+    gap: 8px 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  #info-panel {
+    bottom: 150px;
+  }
+
+  #photo-strip {
+    left: 12px;
+    max-width: calc(100vw - 24px);
+  }
+
+  /* The body list is off-canvas on mobile, like the photo strip above. */
+  #galaxy-note {
+    left: 12px;
+    max-width: calc(100vw - 24px);
+  }
+
+  /* The body list is off-canvas on mobile, so the card can use the width. */
+  #info-card {
+    left: 12px;
+    width: min(300px, calc(100vw - 24px));
+  }
+}
+
+/* UI transitions collapse under reduced motion; the orrery animation itself
+   is content and keeps running (it is driven by JavaScript, not CSS). */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
