@@ -58,7 +58,7 @@
    reader who has raised their browser's default keeps it. The px sizes this
    replaced were exact sixteenths, so at a 100% root nothing moved; the root
    below is what makes it slightly larger. */
-html { font-size: 106%; }
+html { font-size: 112%; }
 html, body {
   overflow-x: clip;
 }
