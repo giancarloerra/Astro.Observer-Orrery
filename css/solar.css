@@ -54,6 +54,11 @@
 
 * { box-sizing: border-box; }
 
+/* Type is in rem so one number sets the size of all of it at once, and a
+   reader who has raised their browser's default keeps it. The px sizes this
+   replaced were exact sixteenths, so at a 100% root nothing moved; the root
+   below is what makes it slightly larger. */
+html { font-size: 106%; }
 html, body {
   overflow-x: clip;
 }
@@ -63,7 +68,7 @@ body {
   background: var(--ground);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.45;
 }
 
@@ -94,7 +99,7 @@ body {
   left: 0;
   top: 0;
   transform: translate(-50%, -160%);
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   white-space: nowrap;
   visibility: hidden;
@@ -144,7 +149,7 @@ body {
   color: var(--ink);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 24px;
+  font-size: 1.5rem;
   letter-spacing: 0.04em;
   text-decoration: none;
 }
@@ -160,7 +165,7 @@ body {
   margin: 0;
   color: var(--muted);
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 400;
   letter-spacing: 0.04em;
 }
@@ -174,12 +179,12 @@ body {
 
 .link-sep {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 #chrome-links a {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -200,7 +205,7 @@ body {
   border: var(--hair) solid var(--accent);
   border-radius: var(--radius);
   color: var(--accent);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 /* ---- shared control styling ---- */
@@ -209,7 +214,7 @@ button,
 select,
 input[type='date'] {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--ink);
   background: var(--panel-2);
   border: var(--hair) solid var(--rule);
@@ -272,14 +277,14 @@ input[type='date'] {
 
 .field-name {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 /* Tabular numeric readout: the mono data register. */
 #date-display {
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 0.75rem;
   min-width: 15ch;
 }
 
@@ -302,7 +307,7 @@ input[type='date'] {
 
 #clamp-note {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 /* GitHub link at the right edge of the control bar, octocat mark inline. */
@@ -313,7 +318,7 @@ input[type='date'] {
   align-items: center;
   gap: 6px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -365,7 +370,7 @@ input[type='date'] {
   text-align: left;
   padding: 6px 14px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 /* Brighter ink, not the accent: the accent means "this is the one being
@@ -378,7 +383,7 @@ input[type='date'] {
    in the display face. */
 #bodies-list button.system {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 #bodies-list button.moon {
@@ -403,7 +408,7 @@ input[type='date'] {
   padding: 10px 14px 2px;
   color: var(--muted);
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 0.6875rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -456,7 +461,7 @@ input[type='date'] {
 #info-panel h2 {
   margin: 0 0 8px;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -465,7 +470,7 @@ input[type='date'] {
 
 #info-panel p {
   margin: 0 0 8px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--ink);
 }
 
@@ -491,7 +496,7 @@ input[type='date'] {
   background: none;
   border: none;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
 }
 
@@ -512,7 +517,7 @@ input[type='date'] {
 .usage-list li {
   position: relative;
   padding: 1px 0 1px 12px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 
@@ -538,7 +543,7 @@ input[type='date'] {
 }
 
 .about-links a {
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -561,7 +566,7 @@ input[type='date'] {
 #tech-notes h3,
 #tech-notes h4 {
   margin: 0 0 6px;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -579,7 +584,7 @@ input[type='date'] {
 }
 
 #tech-notes li {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
   overflow-wrap: anywhere;
   padding: 1px 0;
@@ -587,7 +592,7 @@ input[type='date'] {
 
 #tech-notes p {
   margin: 0 0 6px;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 
@@ -623,7 +628,7 @@ input[type='date'] {
   background: none;
   border: none;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
 }
 
@@ -634,7 +639,7 @@ input[type='date'] {
 #info-card h2 {
   margin: 0 0 6px;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -643,13 +648,13 @@ input[type='date'] {
 
 #card-desc {
   margin: 0 0 8px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--ink);
 }
 
 #card-source {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 
 #card-source:hover,
@@ -674,21 +679,21 @@ input[type='date'] {
 
 .card-row dt {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 
 /* Live value numbers: the mono data register. */
 .card-row dd {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--ink);
   white-space: nowrap;
 }
 
 #card-note {
   margin: 0;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--muted);
 }
 
@@ -737,7 +742,7 @@ input[type='date'] {
 #usage-card h2 {
   margin: 0 0 8px;
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -757,7 +762,7 @@ input[type='date'] {
   background: none;
   border: none;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1;
 }
 
@@ -789,13 +794,13 @@ input[type='date'] {
 
 #photo-strip .strip-label {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
   white-space: nowrap;
 }
 
 #photo-strip a {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: none;
   white-space: nowrap;
   flex: none;
@@ -824,7 +829,7 @@ input[type='date'] {
   top: 0;
   transform: translate(-50%, -160%);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 0.625rem;
   font-variant-caps: all-small-caps;
   letter-spacing: 0.08em;
   color: var(--muted);
@@ -856,7 +861,7 @@ input[type='date'] {
 
 #galaxy-note p {
   margin: 0;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--muted);
 }
 
@@ -872,7 +877,7 @@ input[type='date'] {
   border: var(--hair) solid var(--rule);
   border-radius: var(--radius);
   color: var(--ink);
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: none;
   white-space: nowrap;
   visibility: hidden;
@@ -890,7 +895,7 @@ input[type='date'] {
   background: var(--panel-2);
   border: var(--hair) solid var(--accent);
   border-radius: var(--radius);
-  font-size: 13px;
+  font-size: 0.8125rem;
   z-index: 10;
 }
 
@@ -919,7 +924,7 @@ input[type='date'] {
 
 #noscript-note p {
   margin: 0;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--ink);
 }
 
