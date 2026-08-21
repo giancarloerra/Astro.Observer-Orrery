@@ -11,6 +11,8 @@ switch on.
 Built with [three.js](https://threejs.org/), no build step, no third-party
 runtime requests, a folder of static files.
 
+Running at [astro.observer/orrery](https://astro.observer/orrery/).
+
 ## Screenshots
 
 [![Easy mode: the whole system at a glance](screenshots/easy-mode.png)](screenshots/easy-mode.png)
