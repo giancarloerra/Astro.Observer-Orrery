@@ -1,4 +1,4 @@
-# Astro.Observer Orrery
+# Interactive Solar System 3D Model
 
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/License-AGPL--3.0--or--later-blue.svg)](LICENSE)
 [![Data: JPL SSD](https://img.shields.io/badge/Data-JPL%20SSD-orange.svg)](DATA-SOURCES.md)
