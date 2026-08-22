@@ -226,6 +226,35 @@ outside its recorded ephemeris. A `t` inside the range but outside the
 elements' 1800 to 2050 validity is clamped and says so, as it is when typed
 into the date field.
 
+## Embedding
+
+Load the model with `?embed=1` and it drops the chrome of whatever site is
+hosting it: the wordmark, the site links, and anything a downstream build
+injected as script or markup. What stays is the model, its own heading, its
+controls, the licence notice and the link to this source.
+
+```html
+<iframe src="https://YOUR-DEPLOYMENT/orrery/?embed=1"
+        title="Interactive solar system model"
+        style="width:100%;aspect-ratio:16/10;border:0"
+        loading="lazy"></iframe>
+```
+
+Replace `YOUR-DEPLOYMENT` with wherever this is served from. It combines with
+every parameter above, so `?embed=1&body=saturn` frames Saturn.
+
+Two things the flag deliberately does not change. The source link and the
+copyright notice stay visible: they are the offer the AGPL requires be made to
+everyone using the software, and someone reaching it inside a frame is using
+it. And links inside the frame open in the whole window rather than the frame,
+because a page rendered inside a 600 pixel box on somebody else's site is a
+worse place to arrive than the tab it came from.
+
+Anything a downstream build adds through the markers, including analytics and
+any consent interface, is hidden in this mode and must also be switched off
+rather than merely hidden. This repository ships no analytics; the reference
+deployment turns its own off when the flag is set.
+
 ## Sharing a view
 
 The **Link** control in the bottom bar writes a URL that reopens what is on

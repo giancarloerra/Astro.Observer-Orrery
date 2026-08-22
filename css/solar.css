@@ -1000,3 +1000,26 @@ input[type='date'] {
     animation: none !important;
   }
 }
+
+/* ---- embed mode ---- */
+
+/* Set by the head script when the page is loaded with ?embed=1, for a model
+   framed on somebody else's site. Only the host's own chrome is hidden: its
+   wordmark, its links, and whatever it injected as script or markup.
+   The model's heading stays, because a frame with no heading is anonymous.
+   The source link and the copyright notice stay, always: they are the offer
+   the AGPL requires be made to everyone using the software, and someone
+   reaching it through a frame is using it. */
+:root[data-embed] #site-wordmark,
+:root[data-embed] #chrome-links,
+:root[data-embed] #site-script,
+:root[data-embed] #site-about-links {
+  display: none;
+}
+
+/* The host's links container is empty in a bare checkout of this repository,
+   where no build has filled the marker. An empty nav would still contribute
+   its margin, so it is collapsed rather than left as a gap nobody can see. */
+#site-about-links:empty {
+  display: none;
+}

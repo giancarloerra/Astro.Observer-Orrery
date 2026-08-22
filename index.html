@@ -22,10 +22,33 @@
   <canvas id="scene" aria-label="Solar system orrery"></canvas>
   <div id="labels" aria-hidden="true"></div>
 
+  <script>
+    // Embed mode. A third party framing this model wants the model, not the
+    // chrome of whoever is hosting it. Read here rather than in main.js
+    // because main.js is a deferred module: by the time it runs the host's
+    // wordmark and links have already been painted inside someone else's page.
+    //
+    // The flag is set on the root element and read by CSS alone. Nothing in
+    // the model behaves differently; only what is shown changes.
+    (function () {
+      try {
+        if (new URLSearchParams(location.search).get('embed') === '1') {
+          document.documentElement.setAttribute('data-embed', '');
+          // Links inside the frame open in the whole window. A gallery page
+          // rendered inside a 600 px box on someone else's site is a worse
+          // place to arrive than the tab it came from.
+          var b = document.createElement('base');
+          b.target = '_blank';
+          document.head.appendChild(b);
+        }
+      } catch (e) { /* no query string to read is the ordinary case */ }
+    }());
+  </script>
+
   <header id="top-bar">
     <div id="top-left">
       <div id="brand">
-        <!-- site-wordmark -->
+        <span id="site-wordmark"><!-- site-wordmark --></span>
         <h1 class="sublabel">Interactive Solar System 3D Model</h1>
       </div>
       <nav id="chrome-links" aria-label="Site links" hidden>
@@ -37,7 +60,7 @@
       <button id="bodies-toggle" type="button" aria-expanded="false" aria-controls="bodies-panel">Bodies</button>
     </div>
   </header>
-  <!-- site-script -->
+  <div id="site-script"><!-- site-script --></div>
 
   <!-- The model is drawn with WebGL and built entirely in script, so with
        scripting off the page paints an empty ground. This states what the
@@ -79,8 +102,8 @@
     it, and an arrow showing the direction of the Sun's orbit. Distances
     there are illustrative and the view does not follow the clock; Solar System or
     Escape returns to the planets.</p>
-    <nav class="about-links" aria-label="Source and site links">
-      <!-- site-about-links -->
+    <nav class="about-links" id="site-about-links" aria-label="Site links"><!-- site-about-links --></nav>
+    <nav class="about-links" aria-label="Source">
       <a href="https://github.com/giancarloerra/Astro.Observer-Orrery">Source on GitHub</a>
     </nav>
     <p id="colophon">Open source under
