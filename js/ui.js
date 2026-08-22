@@ -89,6 +89,7 @@ export function initUI({
   onNow,
   onModeChange,
   onSelectBody,
+  onLinkRequest, // returns the query string that reopens the current view
   onResetView,
   onGalaxyView,
 }) {
@@ -117,6 +118,7 @@ export function initUI({
   const usageCard = document.getElementById('usage-card');
   const clampNote = document.getElementById('clamp-note');
   const linkNote = document.getElementById('link-note');
+  const linkButton = document.getElementById('link-button');
   const photoStrip = document.getElementById('photo-strip');
   const galaxyNote = document.getElementById('galaxy-note');
   const controlsBar = document.getElementById('controls');
@@ -287,6 +289,40 @@ export function initUI({
   axesToggle.addEventListener('click', onAxesToggle);
   cometsToggle.addEventListener('click', onCometsToggle);
   probesToggle.addEventListener('click', onProbesToggle);
+
+  // The Link control writes a URL that reopens what is on screen, so a view
+  // worth showing someone can be sent rather than described. It is the same
+  // vocabulary a page elsewhere uses, so nothing new has to be maintained.
+  //
+  // The clipboard is asked, never assumed: it is refused outright in an
+  // insecure context and can be refused by permission anywhere. When it says
+  // no the link is put on screen and selected, which is a worse experience and
+  // an honest one.
+  linkButton.addEventListener('click', async () => {
+    const url = location.origin + location.pathname + onLinkRequest();
+    let copied = false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(url);
+        copied = true;
+      }
+    } catch {
+      // refused by permission or policy: fall through to showing it
+    }
+    if (copied) {
+      linkNote.textContent = 'link copied';
+      linkNote.hidden = false;
+      setTimeout(() => { linkNote.hidden = true; }, 2500);
+    } else {
+      linkNote.textContent = url;
+      linkNote.hidden = false;
+      const r = document.createRange();
+      r.selectNodeContents(linkNote);
+      const sel = getSelection();
+      sel.removeAllRanges();
+      sel.addRange(r);
+    }
+  });
 
   infoToggle.addEventListener('click', () => {
     const open = infoPanel.hidden;

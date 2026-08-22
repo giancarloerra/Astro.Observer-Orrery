@@ -226,6 +226,21 @@ outside its recorded ephemeris. A `t` inside the range but outside the
 elements' 1800 to 2050 validity is clamped and says so, as it is when typed
 into the date field.
 
+## Sharing a view
+
+The **Link** control in the bottom bar writes a URL that reopens what is on
+screen and copies it. It names only what differs from a fresh load, so a link
+to Saturn is `?body=saturn` and nothing more, and a link made while the model
+is running at real time carries no date rather than freezing whoever opens it
+at the sender's second.
+
+The URL it produces is the same vocabulary the deep links above accept, so
+there is one set of parameters to understand and nothing separate to maintain.
+
+Where the clipboard is unavailable, which is any insecure context and anywhere
+the permission is refused, the link is shown in the bar and selected instead of
+being copied silently or failing without a word.
+
 ## View persistence
 
 The interface state persists in a single versioned localStorage key

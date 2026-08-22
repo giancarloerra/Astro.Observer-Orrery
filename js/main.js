@@ -1038,6 +1038,28 @@ function boot(
       scheduleSave();
     },
 
+    // The query string that reopens what is on screen, in the same vocabulary
+    // readLinkParams reads. Only what differs from a fresh load is named, so
+    // the link stays short and says what it means: a link to Saturn is
+    // ?body=saturn and nothing else.
+    onLinkRequest() {
+      const q = new URLSearchParams();
+      if (state.view === 'galaxy') q.set('view', 'galaxy');
+      if (state.followName) {
+        const info = cardInfo.get(state.followName);
+        if (info) q.set('body', info.descKey);
+      }
+      // The clock is named only when it is not roughly now, so a link made
+      // while the model runs at real time does not freeze the recipient at
+      // the sender's second.
+      if (Math.abs(state.simMs - Date.now()) > 36e5) {
+        q.set('t', new Date(state.simMs).toISOString().slice(0, 10));
+      }
+      if (modes.mode !== 'easy') q.set('scale', modes.mode);
+      const qs = q.toString();
+      return qs ? `?${qs}` : '';
+    },
+
     onSelectBody(name) {
       if (state.view === 'galaxy') {
         // Picking a body leaves the galactic view: restore the planetary
