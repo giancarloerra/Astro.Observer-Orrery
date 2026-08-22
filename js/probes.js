@@ -164,7 +164,7 @@ function positionAt(craft, j) {
 // data is the validateProbes result. Registers every craft with the scene as
 // a followable probe body, builds the trajectory lines and the Mars rover
 // pins, and returns the per-frame and per-mode hooks main.js drives. The
-// probesOn boot state (persisted preference or the default, on) comes from
+// probesOn boot state (persisted preference or the default, off) comes from
 // main.js, which also owns the toggle consequences that cross modules.
 export function initProbes({ data, sceneApi, modes, probesOn }) {
   const { scene, camera, bodies } = sceneApi;
