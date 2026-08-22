@@ -74,6 +74,78 @@ const SAVE_DEBOUNCE_MS = 400;
 // hidden instead.
 let storageUsable = true;
 
+// ---- deep links ----
+//
+// A page elsewhere can open the model on one body, at one date, in one view,
+// so a link written about Voyager 1 arrives showing Voyager 1 rather than the
+// default overview. Four parameters, all optional:
+//
+//   body=<key>    a key from data/descriptions.json, e.g. voyager-1, saturn
+//   t=<date>      a date or date-time the browser can parse, e.g. 2026-08-22
+//   view=system|galaxy
+//   scale=easy|accurate
+//
+// Read once at boot and never written back. The URL is a starting state, not
+// a mirror of the view, so what is in the address bar always means what it
+// said when it was written down and can be shared without capturing whatever
+// the visitor did afterwards.
+//
+// A value this build cannot honour is reported in the control bar, never
+// dropped in silence: showing the default view to someone who followed a link
+// naming something else is the failure mode worth avoiding.
+function readLinkParams() {
+  const empty = { body: null, timeMs: null, view: null, mode: null, refused: [] };
+  let q;
+  try {
+    q = new URLSearchParams(location.search);
+  } catch {
+    // No query string to read is not an error; it is the ordinary case.
+    return empty;
+  }
+  const refused = [];
+  const get = (k) => {
+    const v = q.get(k);
+    return v === null ? null : v.trim();
+  };
+  const oneOf = (k, allowed) => {
+    const v = get(k);
+    if (v === null || v === '') return null;
+    if (allowed.includes(v)) return v;
+    refused.push(`${k}=${v}`);
+    return null;
+  };
+
+  const mode = oneOf('scale', ['easy', 'accurate']);
+  const view = oneOf('view', ['system', 'galaxy']);
+
+  let timeMs = null;
+  const t = get('t');
+  if (t !== null && t !== '') {
+    const ms = Date.parse(t);
+    if (Number.isFinite(ms)) timeMs = ms;
+    else refused.push(`t=${t}`);
+  }
+
+  const body = get('body');
+  return { body: body || null, timeMs, view, mode, refused };
+}
+
+// Which layer a linked body sits behind, decided from the validated data
+// before the interface state is built so the layer is on from the first frame
+// rather than switched on after it. The keys are the same descriptions.json
+// keys the interface uses; missionKey below mirrors the one in boot.
+function linkBodyKind(key, bodiesData, famousComets, probesParsed, skymapData) {
+  const missionKey = (name) => name.toLowerCase().replace(/ /g, '-');
+  if (bodiesData.bodies.some((b) => b.name.toLowerCase() === key)) return 'body';
+  if (famousComets.some((c) => c.key === key)) return 'comet';
+  if (probesParsed.craft.some((c) => missionKey(c.name) === key)) return 'probe';
+  if (probesParsed.rovers.some((r) => missionKey(r.name) === key)) return 'rover';
+  // skymap.json is optional site data; its comets are photographed ones.
+  if (skymapData && Array.isArray(skymapData.comets)
+      && skymapData.comets.some((c) => missionKey(c.name) === key)) return 'comet';
+  return null;
+}
+
 function fatal(message) {
   const el = document.getElementById('fatal');
   el.textContent = message;
@@ -309,7 +381,14 @@ function boot(
   const descriptions = validateDescriptions(descriptionsData);
   const galaxyParsed = validateGalaxy(galaxyData);
 
-  const modes = createModes(stored ? stored.mode : 'easy');
+  // Read before anything reads the interface state: the scale mode is fixed
+  // at construction, and the clock and the layer toggles are fixed just below.
+  const link = readLinkParams();
+  const linkKind = link.body
+    ? linkBodyKind(link.body, bodiesData, famousComets, probesParsed, skymapData)
+    : null;
+
+  const modes = createModes(link.mode || (stored ? stored.mode : 'easy'));
 
   // Validates every WGCCRE series in rotation.json up front; a malformed
   // entry throws here and surfaces through the fatal handler below.
@@ -326,20 +405,36 @@ function boot(
   });
 
   // ---- simulated clock and interface state (persisted, see above) ----
+  // A URL parameter wins over the stored snapshot, field by field, and the
+  // stored snapshot wins over the default. A link naming a date also pauses:
+  // at the default speed of a day per second the moment it names would be
+  // gone before it could be read.
+  //
+  // Comets and probes both default off, so a link to one has to turn its layer
+  // on here, before initSkymap and initProbes read these flags. A rover pin
+  // rides the probes layer too.
   const state = {
-    simMs: stored ? stored.simMs : Date.now(),
+    simMs: link.timeMs !== null ? link.timeMs : stored ? stored.simMs : Date.now(),
     speed: stored ? stored.speed : 86400, // default matches the selected markup option (1 day/s)
-    playing: stored ? stored.playing : true,
+    playing: link.timeMs !== null ? false : stored ? stored.playing : true,
     axes: stored ? stored.axes : true, // orientation indicators default on, matching the markup
     skyPhotos: stored ? stored.skyPhotos : true,
-    comets: stored ? stored.comets : false,
-    probes: stored ? stored.probes : false, // spacecraft and rover pins default off, matching the markup
+    comets: linkKind === 'comet' ? true : stored ? stored.comets : false,
+    probes:
+      linkKind === 'probe' || linkKind === 'rover'
+        ? true
+        : stored
+          ? stored.probes
+          : false, // spacecraft and rover pins default off, matching the markup
     helpSeen: stored ? stored.helpSeen : false, // the first-arrival usage card
     view: 'system', // 'system' or 'galaxy'; a stored galaxy view is re-entered after the restore below
     followName: null,
     fly: null,
   };
-  clampSim();
+  // A link naming a date outside the elements' validity is clamped like any
+  // other, but says so once the interface exists: silently showing 1800 to
+  // someone who asked for 1799 would be the model lying about what it drew.
+  const linkTimeClamped = clampSim() && link.timeMs !== null;
 
   // Optional photo sky-mapping from skymap.json: photographed comets as
   // followable bodies with a photo marker beside each, deep-sky thumbnail
@@ -1002,9 +1097,71 @@ function boot(
   // stored camera kept: the follow stays suspended behind it (no card, no
   // photo strip) exactly as it was when the snapshot was taken, and resumes
   // on the way out.
-  if (stored) {
+  // descriptions.json keys are the vocabulary a link uses; the scene is keyed
+  // by display name. cardInfo already holds both, so the reverse map keeps one
+  // vocabulary rather than inventing a second that could drift from it.
+  const slugToName = new Map();
+  for (const [name, info] of cardInfo) slugToName.set(info.descKey, name);
+
+  // Acquire a body without the fly animation. A link should open on its
+  // subject, not perform an 800 ms camera move away from a framing the
+  // visitor never saw. Mirrors the acquisition in exitGalaxyView, including
+  // the degenerate guard for a camera sitting exactly on the target.
+  function acquireNow(name) {
+    sceneApi.getWorldPosition(name, tmpA);
+    const dir = camera.position.clone().sub(tmpA);
+    if (dir.lengthSq() === 0) dir.set(0, 0.5, 1);
+    dir.normalize();
+    const dist = Math.max(sceneApi.displayRadius(name) * FLY_RADII, flyMinDist());
+    controls.target.copy(tmpA);
+    camera.position.copy(tmpA).addScaledVector(dir, dist);
+  }
+
+  const linkRefused = [...link.refused];
+  let linkFramed = false;
+
+  if (link.body) {
+    const name = slugToName.get(link.body);
+    const info = name ? cardInfo.get(name) : null;
+    if (!name || !info) {
+      // Named something this build does not carry. Two comets reach the model
+      // only through an optional skymap.json, so this is a real case rather
+      // than only a typo.
+      linkRefused.push(`body=${link.body}`);
+    } else if (info.kind === 'rover') {
+      // Rovers are pins on Mars, not followable bodies: getWorldPosition
+      // throws on them. The existing pin click opens the card and leaves the
+      // camera alone, and a link does the same rather than inventing a
+      // behaviour the interface does not otherwise have.
+      showCard(name);
+    } else {
+      const rec = sceneApi.bodies.get(name);
+      if (rec && rec.type === 'probe' && !rec.exists) {
+        // Outside its recorded ephemeris there is nothing to point at, and
+        // the scene deliberately draws no marker. Cassini's data ends the day
+        // the mission ended, so a link to it at today's date lands here.
+        linkRefused.push(`${link.body} has no recorded position at this date`);
+      } else if (rec) {
+        state.followName = name;
+        acquireNow(name);
+        ui.setActiveBody(name);
+        ui.updatePhotoStrip(photoEntry(name));
+        showCard(name);
+        linkFramed = true;
+      } else {
+        linkRefused.push(`body=${link.body}`);
+      }
+    }
+  }
+
+  // The stored camera is restored only where the link did not frame the view.
+  // A visitor arriving from a link about Voyager 1 must see Voyager 1, not the
+  // corner of the system they were looking at yesterday.
+  if (stored && !linkFramed) {
     camera.position.set(stored.camera[0], stored.camera[1], stored.camera[2]);
     controls.target.set(stored.target[0], stored.target[1], stored.target[2]);
+  }
+  if (stored && !link.body) {
     const followRec = stored.follow ? sceneApi.bodies.get(stored.follow) : undefined;
     if (
       followRec &&
@@ -1012,15 +1169,24 @@ function boot(
       (followRec.type !== 'probe' || (state.probes && followRec.exists))
     ) {
       state.followName = stored.follow;
-      if (stored.view !== 'galaxy') {
+      if (stored.view !== 'galaxy' && link.view !== 'galaxy') {
         ui.setActiveBody(stored.follow);
         ui.updatePhotoStrip(photoEntry(stored.follow));
         showCard(stored.follow);
       }
     }
-    if (stored.view === 'galaxy') {
-      enterGalaxyView(false);
-    }
+  }
+
+  // The link's view wins over the stored one. Entering without framing keeps
+  // whatever the planetary camera is, which is what a galactic link wants.
+  const wantGalaxy = link.view ? link.view === 'galaxy' : stored && stored.view === 'galaxy';
+  if (wantGalaxy) {
+    enterGalaxyView(false);
+  }
+
+  if (linkTimeClamped) ui.showClampNote();
+  if (linkRefused.length) {
+    ui.showLinkNote(`link ignored: ${linkRefused.join(', ')}`);
   }
 
   loadPhotos()

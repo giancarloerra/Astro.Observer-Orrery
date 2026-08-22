@@ -182,6 +182,45 @@ visible error, never ignored.
 }
 ```
 
+## Deep links
+
+A page elsewhere can open the model on one body, at one date, in one view, so
+a link written about Voyager 1 arrives showing Voyager 1 rather than the
+default overview. All four parameters are optional:
+
+| parameter | values | example |
+|---|---|---|
+| `body` | any key from `data/descriptions.json` | `?body=voyager-1` |
+| `t` | any date or date-time the browser can parse | `?t=2010-06-01` |
+| `view` | `system` or `galaxy` | `?view=galaxy` |
+| `scale` | `easy` or `accurate` | `?scale=accurate` |
+
+They combine: `?body=cassini&t=2010-06-01&scale=accurate`.
+
+What the parameters do beyond the obvious:
+
+- A `body` behind a layer that is off switches that layer on. Comets and
+  probes both default off, so a link to one would otherwise arrive pointing at
+  something invisible.
+- A `t` also pauses. At the default speed of a day per second the moment the
+  link names would be gone before it could be read.
+- A `body` frames the view, so the stored camera from a previous visit does not
+  override the link. Everything the URL does not name still comes from the
+  stored snapshot.
+- Rovers open their card without moving the camera, the same as clicking their
+  pin. They are surface sites on Mars, not followable bodies.
+
+They are read once at boot and never written back. The URL is a starting
+state, not a mirror of the view, so what is in the address bar always means
+what it said when it was written down.
+
+A value this build cannot honour is named in the control bar rather than
+dropped in silence: an unknown `body`, a `view` or `scale` outside its two
+values, a `t` the browser cannot parse, or a spacecraft asked for at a date
+outside its recorded ephemeris. A `t` inside the range but outside the
+elements' 1800 to 2050 validity is clamped and says so, as it is when typed
+into the date field.
+
 ## View persistence
 
 The interface state persists in a single versioned localStorage key

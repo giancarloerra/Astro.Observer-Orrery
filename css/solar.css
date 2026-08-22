@@ -305,7 +305,10 @@ input[type='date'] {
   border-left: none;
 }
 
-#clamp-note {
+/* Both are quiet notes in the control bar: the clock hitting the edge of the
+   data's validity, and a link parameter this build could not honour. */
+#clamp-note,
+#link-note {
   color: var(--muted);
   font-size: 0.75rem;
 }

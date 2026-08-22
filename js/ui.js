@@ -116,6 +116,7 @@ export function initUI({
   const bodiesList = document.getElementById('bodies-list');
   const usageCard = document.getElementById('usage-card');
   const clampNote = document.getElementById('clamp-note');
+  const linkNote = document.getElementById('link-note');
   const photoStrip = document.getElementById('photo-strip');
   const galaxyNote = document.getElementById('galaxy-note');
   const controlsBar = document.getElementById('controls');
@@ -385,6 +386,15 @@ export function initUI({
     // Shown when the simulated clock reaches the edge of the validity range.
     showClampNote() {
       clampNote.hidden = false;
+    },
+
+    // Shown when a URL parameter could not be honoured. The model still runs;
+    // this says which part of the link was refused, so a visitor who followed
+    // a link naming a body that is not here is told, rather than shown the
+    // default view as though that is what the link meant.
+    showLinkNote(text) {
+      linkNote.textContent = text;
+      linkNote.hidden = false;
     },
 
     setMode(mode) {
