@@ -205,8 +205,13 @@ What the parameters do beyond the obvious:
 - A `t` also pauses. At the default speed of a day per second the moment the
   link names would be gone before it could be read.
 - A `body` frames the view, so the stored camera from a previous visit does not
-  override the link. Everything the URL does not name still comes from the
-  stored snapshot.
+  override the link, and it suppresses a stored galactic view, where the body
+  would not be drawn at all.
+- A `body` without a `t` also sets the clock to now, because that is the
+  question such a link asks. A stored clock left on another date would answer a
+  different one, and left before a spacecraft launched it would refuse the link
+  outright. Everything the URL does not name still comes from the stored
+  snapshot.
 - Rovers open their card without moving the camera, the same as clicking their
   pin. They are surface sites on Mars, not followable bodies.
 

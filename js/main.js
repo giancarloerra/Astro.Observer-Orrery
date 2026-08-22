@@ -414,7 +414,18 @@ function boot(
   // on here, before initSkymap and initProbes read these flags. A rover pin
   // rides the probes layer too.
   const state = {
-    simMs: link.timeMs !== null ? link.timeMs : stored ? stored.simMs : Date.now(),
+    // A link naming a body but no date means now: the question such a link
+    // answers is "where is it now", and a stored clock left on some other date
+    // would answer a different one. Left on 1800 it would refuse a spacecraft
+    // outright, since none of them existed yet.
+    simMs:
+      link.timeMs !== null
+        ? link.timeMs
+        : link.body
+          ? Date.now()
+          : stored
+            ? stored.simMs
+            : Date.now(),
     speed: stored ? stored.speed : 86400, // default matches the selected markup option (1 day/s)
     playing: link.timeMs !== null ? false : stored ? stored.playing : true,
     axes: stored ? stored.axes : true, // orientation indicators default on, matching the markup
@@ -1177,9 +1188,13 @@ function boot(
     }
   }
 
-  // The link's view wins over the stored one. Entering without framing keeps
-  // whatever the planetary camera is, which is what a galactic link wants.
-  const wantGalaxy = link.view ? link.view === 'galaxy' : stored && stored.view === 'galaxy';
+  // The link's view wins over the stored one, and a link that framed a body
+  // suppresses a stored galactic view outright: the body is not drawn there,
+  // so honouring the snapshot would land a link about Voyager 1 on a picture
+  // of the galaxy with Voyager 1 nowhere in it.
+  const wantGalaxy = link.view
+    ? link.view === 'galaxy'
+    : !linkFramed && stored && stored.view === 'galaxy';
   if (wantGalaxy) {
     enterGalaxyView(false);
   }
